@@ -1,6 +1,7 @@
 'use client'
 import { DefaultForm } from '@/components/DefaultForm/DefaultForm'
 import { registerSchema } from '@/providers/utils/zod/register'
+import Link from 'next/link'
 
 export const ClientPageRegister = () => {
   const handleRegister = (data: unknown) => {
@@ -9,7 +10,7 @@ export const ClientPageRegister = () => {
 
   return (
     <div>
-      <h1 className="text-lg font-semibold text-text-primary">
+      <h1 className="mb-3 text-lg font-semibold text-text-primary">
         Crie sua conta e aproveite uma experiência personalizada!
       </h1>
       <DefaultForm
@@ -42,6 +43,15 @@ export const ClientPageRegister = () => {
         ]}
         buttonName="Continuar"
       />
+      <p>
+        Já tem uma conta?{' '}
+        <Link
+          href={'/login'}
+          className="pb-3 font-semibold text-primary-greenLight"
+        >
+          Login
+        </Link>
+      </p>
     </div>
   )
 }

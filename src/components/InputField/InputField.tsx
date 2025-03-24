@@ -19,18 +19,18 @@ export function InputField({
   type,
 }: InputsFieldsProps) {
   return (
-    <div>
-      <label htmlFor={name} className="">
+    <div className="my-2 flex w-full flex-col">
+      <label htmlFor={name} className="text-text-primary">
         {label}
       </label>
       <input
         id={name}
         {...register(name)}
-        className=""
+        className="rounded-sm border border-text-secondary px-4 py-2 focus:outline-none"
         placeholder={placeholder}
         type={type}
       />
-      {error && <p className="">{error.message}</p>}
+      {error && <p className="text-red-600">{error.message}</p>}
     </div>
   )
 }

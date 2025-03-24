@@ -20,4 +20,8 @@ export const projectColors = {
   accent: {
     bluePetroil: '#004D40', // Novo tom para dar contraste
   },
+
+  errors: {
+    textError: '#DC2626',
+  },
 }

@@ -31,7 +31,7 @@ export function DefaultForm<T extends ZodSchema<any>>({
   })
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="">
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
       {fields.map(({ name, label, type, placeholder }) => (
         <InputField
           key={name as string}
@@ -43,7 +43,10 @@ export function DefaultForm<T extends ZodSchema<any>>({
           error={errors[name] as FieldError | undefined}
         />
       ))}
-      <button className="" type="submit">
+      <button
+        className="mt-5 bg-primary-greenLight px-4 py-2 text-center text-neutral-white"
+        type="submit"
+      >
         {buttonName}
       </button>
     </form>
