@@ -10,3 +10,5 @@ export const registerSchema = z.object({
     .min(11, 'O telefone possui menos de 21 caracteres')
     .min(1, 'O telefone é obrigatório'),
 })
+
+export type RegisterData = z.infer<typeof registerSchema>

@@ -1,9 +1,8 @@
 'use client'
-import { ButtonDefault } from '@/components/Button/Button'
 import { DefaultForm } from '@/components/DefaultForm/DefaultForm'
 import { loginSchema } from '@/providers/utils/zod/login'
 
-export const ClientPageLogin = () => {
+export const ClientPageForgetPassword = () => {
   const handleRegister = (data: unknown) => {
     console.log(data)
   }
@@ -22,16 +21,13 @@ export const ClientPageLogin = () => {
           },
           {
             name: 'senha',
-            label: 'Senha',
+            label: 'Nova Senha',
             type: 'password',
-            placeholder: 'Digite sua senha',
+            placeholder: 'Digite sua nova senha',
           },
         ]}
-        childrenButton="Continuar"
+        childrenButton="Salvar"
       />
-      <ButtonDefault href={'/forgetPassword'} variant="link">
-        Esqueceu sua senha?
-      </ButtonDefault>
     </div>
   )
 }

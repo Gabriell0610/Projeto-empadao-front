@@ -1,25 +1,22 @@
 'use client'
+import { ButtonDefault } from '@/components/Button/Button'
 import { DefaultForm } from '@/components/DefaultForm/DefaultForm'
-import { registerSchema } from '@/providers/utils/zod/register'
-import Link from 'next/link'
+import { RegisterData, registerSchema } from '@/providers/utils/zod/register'
 
 export const ClientPageRegister = () => {
-  const handleRegister = (data: unknown) => {
+  const handleRegister = (data: RegisterData) => {
     console.log(data)
   }
 
   return (
     <div>
-      <h1 className="mb-3 text-lg font-semibold text-text-primary">
-        Crie sua conta e aproveite uma experiência personalizada!
-      </h1>
       <DefaultForm
         schema={registerSchema}
         onSubmit={handleRegister}
         fields={[
           {
             name: 'nome',
-            label: 'Nome e Sobrenome',
+            label: 'Nome Completo',
             placeholder: 'Digite seu nome completo',
           },
           {
@@ -41,16 +38,13 @@ export const ClientPageRegister = () => {
             placeholder: 'Digite seu telefone',
           },
         ]}
-        buttonName="Continuar"
+        childrenButton="Continuar"
       />
       <p>
         Já tem uma conta?{' '}
-        <Link
-          href={'/login'}
-          className="pb-3 font-semibold text-primary-greenLight"
-        >
-          Login
-        </Link>
+        <ButtonDefault href={'/login'} variant={'link'}>
+          {'login'}
+        </ButtonDefault>
       </p>
     </div>
   )

@@ -5,7 +5,7 @@ import { AuthLayout } from '@/components/AuthLayout/AuthLayout'
 export default function RegisterPage() {
   return (
     <>
-    <AuthLayout altImage='Uma pessoa esperando ser logada' imageUrl={imageLogin}>
+    <AuthLayout altImage='Uma pessoa esperando ser logada' imageUrl={imageLogin} title={'Acesse sua conta e faça seus pedidos!'}>
       <ClientPageLogin/>
     </AuthLayout>
     </>

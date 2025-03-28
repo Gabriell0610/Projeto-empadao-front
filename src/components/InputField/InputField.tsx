@@ -30,7 +30,7 @@ export function InputField({
         placeholder={placeholder}
         type={type}
       />
-      {error && <p className="text-red-600">{error.message}</p>}
+      {error && <p className="text-errors-textError">{error.message}</p>}
     </div>
   )
 }

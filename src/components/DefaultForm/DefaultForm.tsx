@@ -3,6 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { FieldError, useForm } from 'react-hook-form'
 import { TypeOf, ZodSchema } from 'zod'
 import { InputField } from '../InputField/InputField'
+import { ButtonDefault } from '../Button/Button'
 
 interface FormProps<T extends ZodSchema<any>> {
   schema: T
@@ -13,14 +14,14 @@ interface FormProps<T extends ZodSchema<any>> {
     type?: string
     placeholder: string
   }[]
-  buttonName?: string
+  childrenButton?: string
 }
 
 export function DefaultForm<T extends ZodSchema<any>>({
   schema,
   onSubmit,
   fields,
-  buttonName,
+  childrenButton,
 }: FormProps<T>) {
   const {
     register,
@@ -43,12 +44,9 @@ export function DefaultForm<T extends ZodSchema<any>>({
           error={errors[name] as FieldError | undefined}
         />
       ))}
-      <button
-        className="mt-5 bg-primary-greenLight px-4 py-2 text-center text-neutral-white"
-        type="submit"
-      >
-        {buttonName}
-      </button>
+      <ButtonDefault type="submit" variant="primary">
+        {childrenButton}
+      </ButtonDefault>
     </form>
   )
 }
