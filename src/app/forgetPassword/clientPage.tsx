@@ -1,6 +1,6 @@
 'use client'
 import { DefaultForm } from '@/components/DefaultForm/DefaultForm'
-import { loginSchema } from '@/providers/utils/zod/login'
+import { loginSchema } from '@/utils/zod/login'
 
 export const ClientPageForgetPassword = () => {
   const handleRegister = (data: unknown) => {

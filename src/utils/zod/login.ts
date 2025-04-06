@@ -3,5 +3,7 @@ import { passwordValidation } from './validations/password'
 
 export const loginSchema = z.object({
   email: z.string().email('Email inválido').min(1, 'Email é obrigatório'),
-  senha: passwordValidation,
+  password: passwordValidation,
 })
+
+export type loginDto = z.infer<typeof loginSchema>
