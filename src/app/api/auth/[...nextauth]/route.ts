@@ -1,9 +1,32 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import NextAuth from 'next-auth/next'
 import { JWT, NextAuthOptions } from 'next-auth'
 import CredentialProvider from 'next-auth/providers/credentials'
 import { jwtDecode } from 'jwt-decode'
+import { AccessProfile } from '@/constants/enums/accessProfile'
+
+const login = async (credentials: any) => {
+  try {
+    const res = await fetch('http://localhost:1338/api/auth/login', {
+      method: 'POST',
+      body: JSON.stringify({
+        email: credentials?.email,
+        password: credentials?.password,
+      }),
+      headers: { 'Content-Type': 'application/json' },
+    })
+
+    const user = await res.json()
+
+    if (!res.ok) {
+      throw new Error('Email ou senha inválidos')
+    }
+
+    return user
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 const authOption: NextAuthOptions = {
   providers: [
@@ -14,29 +37,17 @@ const authOption: NextAuthOptions = {
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
-        const res = await fetch('http://localhost:1338/api/auth/login', {
-          method: 'POST',
-          body: JSON.stringify({
-            email: credentials?.email,
-            password: credentials?.password,
-          }),
-          headers: { 'Content-Type': 'application/json' },
-        })
+        const res = await login(credentials)
 
-        const user = await res.json()
-
-        if (!res.ok) {
-          throw new Error('Email ou senha inválidos')
-        }
         // Decodificando token para pegar id, email e role
-        const decoded = jwtDecode<JWT>(user.access_token)
+        const decoded = jwtDecode<JWT>(res.access_token)
         console.log(decoded)
 
         return {
           id: decoded.id, // Obrigatório para NextAuth
           email: decoded.email,
           role: decoded.role,
-          accessToken: user.access_token,
+          accessToken: res.access_token,
         }
       },
     }),
@@ -56,7 +67,7 @@ const authOption: NextAuthOptions = {
       if (session.user) {
         session.user.id = token.id as string
         session.user.email = token.email as string
-        session.user.role = token.role as string
+        session.user.role = token.role as AccessProfile
         session.user.accessToken = token.accessToken as string
       }
 

@@ -1,13 +1,17 @@
 import { withAuth } from 'next-auth/middleware'
 import { NextResponse } from 'next/server'
 import type { NextRequestWithAuth } from 'next-auth/middleware'
+import { AccessProfile } from './constants/enums/accessProfile'
 
 export default withAuth(function middleware(req: NextRequestWithAuth) {
+  // nextUrl nativo do next
   const isAdminRoute = req.nextUrl.pathname.startsWith('/admin')
+
+  // nextAuth só da para usar quando tem withAuth - Com o nextAuth eu consigo pegar os dados do usuário que estão no token no cookie
   const userRole = req.nextauth.token?.role
   const token = req.nextauth.token
 
-  const isAdmin = userRole === 'admin'
+  const isAdmin = userRole === AccessProfile.ADMIN
 
   console.log('[MIDDLEWARE] ROLE:', userRole)
 

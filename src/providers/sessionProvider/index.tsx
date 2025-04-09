@@ -1,5 +1,5 @@
 'use client'
-import { SomeChildrenInterface } from '@/types/layout.type'
+import { SomeChildrenInterface } from '@/utils/types/layout.type'
 import { SessionProvider as NextSessionProvider } from 'next-auth/react'
 
 // interface SessionProviderInterface extends SomeChildrenInterface {

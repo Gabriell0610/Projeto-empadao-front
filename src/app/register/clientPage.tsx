@@ -1,7 +1,7 @@
 'use client'
 import { ButtonDefault } from '@/components/Button/Button'
 import { DefaultForm } from '@/components/DefaultForm/DefaultForm'
-import { RegisterData, registerSchema } from '@/utils/zod/register'
+import { RegisterData, registerSchema } from '@/utils/zod/register.schema'
 
 export const ClientPageRegister = () => {
   const handleRegister = (data: RegisterData) => {

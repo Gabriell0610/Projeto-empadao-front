@@ -1,15 +1,22 @@
 'use client'
 import { ButtonDefault } from '@/components/Button/Button'
 import { DefaultForm } from '@/components/DefaultForm/DefaultForm'
-import { loginDto, loginSchema } from '@/utils/zod/login'
+import { LoadingComponent } from '@/components/Loading/LoadingComponent'
+import { AccessProfile } from '@/constants/enums/accessProfile'
+import { LoadingContext } from '@/providers/loadingProvider/loadingProvider'
+import { loginDto, loginSchema } from '@/utils/zod/login.schema'
 import { getSession, signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
+import { useContext } from 'react'
 
 export const ClientPageLogin = () => {
   const router = useRouter()
 
+  const { isLoading, setIsLoading } = useContext(LoadingContext)
+
   const handleLogin = async (data: loginDto) => {
     try {
+      setIsLoading(true)
       const res = await signIn('credentials', {
         redirect: false,
         email: data.email,
@@ -20,7 +27,7 @@ export const ClientPageLogin = () => {
       if (!res?.error) {
         const session = await getSession() // Pega a session atualizada do usuário logado
 
-        if (session?.user.role === 'admin') {
+        if (session?.user.role === AccessProfile.ADMIN) {
           router.push('/admin')
         } else {
           router.push('/client')
@@ -31,6 +38,8 @@ export const ClientPageLogin = () => {
       }
     } catch (error) {
       console.error(error)
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -58,6 +67,7 @@ export const ClientPageLogin = () => {
       <ButtonDefault href={'/forgetPassword'} variant="link">
         Esqueceu sua senha?
       </ButtonDefault>
+      {isLoading && <LoadingComponent />}
     </div>
   )
 }

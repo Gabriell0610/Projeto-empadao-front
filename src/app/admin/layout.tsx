@@ -1,5 +1,4 @@
-import { SessionProvider } from '@/providers/sessionProvider'
-import { SomeChildrenInterface } from '@/types/layout.type'
+import { SomeChildrenInterface } from '@/utils/types/layout.type'
 
 export default function AdminLayout({ children }: SomeChildrenInterface) {
   return (
@@ -15,7 +14,7 @@ export default function AdminLayout({ children }: SomeChildrenInterface) {
         <li>Dashboard financeiro</li>
         <li></li>
       </ul>
-      <SessionProvider>{children}</SessionProvider>
+      {children}
     </>
   )
 }

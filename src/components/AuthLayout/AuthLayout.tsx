@@ -1,5 +1,5 @@
 'use client'
-import { SomeChildrenInterface } from '@/types/layout.type'
+import { SomeChildrenInterface } from '@/utils/types/layout.type'
 import Image, { StaticImageData } from 'next/image'
 import { useRouter } from 'next/navigation'
 import { FiChevronLeft } from 'react-icons/fi'
