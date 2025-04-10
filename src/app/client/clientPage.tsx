@@ -26,7 +26,7 @@ export default function ClientPage() {
         <p>Role: {session?.user.role}</p>
         <p>Token: {session?.user.accessToken}</p>
       </div>
-      {isLoading && <LoadingComponent />}
+      {isLoading && <LoadingComponent mode={'fullScreen'} />}
     </>
   )
 }

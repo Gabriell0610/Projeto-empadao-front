@@ -2,6 +2,8 @@
 import Link from 'next/link'
 import { ComponentProps } from 'react'
 import { IconType } from 'react-icons'
+import { twMerge } from 'tailwind-merge'
+import { LoadingComponent } from '../Loading/LoadingComponent'
 
 type ButtonProps = ComponentProps<'button'>
 type VariantButton = 'primary' | 'secondary' | 'link'
@@ -33,14 +35,16 @@ export const ButtonDefault = ({
     return (
       <Link
         href={href || ''}
-        className={`pb-3 text-primary-greenLight ${className}`}
+        className={twMerge(
+          isLoading
+            ? 'pointer-events-none cursor-not-allowed pb-3 text-primary-greenLight opacity-50'
+            : 'pb-3 text-primary-greenLight',
+        )}
       >
         {children}
       </Link>
     )
   }
-
-  // baixar tw-merge
 
   return (
     <button
@@ -48,9 +52,20 @@ export const ButtonDefault = ({
       type={type}
       disabled={disabled}
       onClick={disabled ? undefined : onClick}
-      className={`mt-5 px-4 ${isPrimary ? 'bg-primary-greenLight' : ''} py-2 text-center text-neutral-white`}
+      className={twMerge(
+        isPrimary
+          ? 'mt-5 bg-primary-greenLight px-4 py-2 text-center text-neutral-white'
+          : '',
+      )}
     >
-      {children}
+      {isLoading ? (
+        <div className="flex items-center justify-center gap-2">
+          <LoadingComponent size={20} />
+          {'carregando...'}
+        </div>
+      ) : (
+        children
+      )}
     </button>
   )
 }

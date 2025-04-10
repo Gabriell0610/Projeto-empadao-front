@@ -1,7 +1,7 @@
 'use client'
 import { ButtonDefault } from '@/components/Button/Button'
 import { DefaultForm } from '@/components/DefaultForm/DefaultForm'
-import { LoadingComponent } from '@/components/Loading/LoadingComponent'
+// import { LoadingComponent } from '@/components/Loading/LoadingComponent'
 import { AccessProfile } from '@/constants/enums/accessProfile'
 import { LoadingContext } from '@/providers/loadingProvider/loadingProvider'
 import { loginDto, loginSchema } from '@/utils/zod/login.schema'
@@ -35,10 +35,10 @@ export const ClientPageLogin = () => {
       } else {
         // AQUI VAI SER LANÇADO O MODAL COM O ERRO - EMAIL OU USUÁRIO INVÁLIDOS
         console.log('ERROR', res.error)
+        setIsLoading(false)
       }
     } catch (error) {
       console.error(error)
-    } finally {
       setIsLoading(false)
     }
   }
@@ -48,6 +48,7 @@ export const ClientPageLogin = () => {
       <DefaultForm
         schema={loginSchema}
         onSubmit={handleLogin}
+        isLoading={isLoading}
         fields={[
           {
             name: 'email',
@@ -64,10 +65,14 @@ export const ClientPageLogin = () => {
         ]}
         childrenButton="Entrar"
       />
-      <ButtonDefault href={'/forgetPassword'} variant="link">
+
+      <ButtonDefault
+        href={'/forgetPassword'}
+        variant="link"
+        isLoading={isLoading}
+      >
         Esqueceu sua senha?
       </ButtonDefault>
-      {isLoading && <LoadingComponent />}
     </div>
   )
 }

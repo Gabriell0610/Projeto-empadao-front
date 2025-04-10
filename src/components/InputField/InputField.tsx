@@ -1,13 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { ComponentProps } from 'react'
 import { FieldError, UseFormRegister } from 'react-hook-form'
 
-interface InputsFieldsProps {
-  label: string
-  name: string
+type InputProps = ComponentProps<'input'>
+
+interface InputsFieldsProps extends InputProps {
   register: UseFormRegister<any>
   error?: FieldError
-  placeholder: string
-  type?: string
+  label: string
+  name: string
 }
 
 export function InputField({
@@ -17,6 +18,7 @@ export function InputField({
   error,
   placeholder,
   type,
+  ...rest
 }: InputsFieldsProps) {
   return (
     <div className="my-2 flex w-full flex-col">
@@ -29,6 +31,7 @@ export function InputField({
         className="rounded-sm border border-text-secondary px-4 py-2 focus:outline-none"
         placeholder={placeholder}
         type={type}
+        {...rest}
       />
       {error && <p className="text-errors-textError">{error.message}</p>}
     </div>

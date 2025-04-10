@@ -15,6 +15,7 @@ interface FormProps<T extends ZodSchema<any>> {
     placeholder: string
   }[]
   childrenButton?: string
+  isLoading?: boolean
 }
 
 export function DefaultForm<T extends ZodSchema<any>>({
@@ -22,6 +23,7 @@ export function DefaultForm<T extends ZodSchema<any>>({
   onSubmit,
   fields,
   childrenButton,
+  isLoading,
 }: FormProps<T>) {
   const {
     register,
@@ -42,9 +44,10 @@ export function DefaultForm<T extends ZodSchema<any>>({
           placeholder={placeholder}
           type={type || 'text'}
           error={errors[name] as FieldError | undefined}
+          disabled={isLoading}
         />
       ))}
-      <ButtonDefault type="submit" variant="primary">
+      <ButtonDefault type="submit" variant="primary" isLoading={isLoading}>
         {childrenButton}
       </ButtonDefault>
     </form>

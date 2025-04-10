@@ -6,19 +6,20 @@ import colors from 'tailwindcss/colors'
 
 export const LoadingComponent = ({
   size = 60,
-  mode,
+  mode = '',
 }: LoadingComponentInterface) => {
   return (
     <div
       className={twMerge(
-        'flex h-full w-full items-center justify-center',
-        'z-1 absolute inset-0',
+        mode === 'fullScreen'
+          ? 'fixed inset-0 z-[50] flex h-full w-full items-center justify-center bg-black/50'
+          : '',
       )}
     >
       <AiOutlineLoading3Quarters
         size={size}
         className="animate-spin"
-        color={colors.green[500]}
+        color={mode === 'fullScreen' ? colors.green[500] : colors.white[600]}
       />
     </div>
   )
