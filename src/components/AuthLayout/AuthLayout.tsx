@@ -25,7 +25,7 @@ export const AuthLayout = ({
             <FiChevronLeft
               size={32}
               className="cursor-pointer"
-              onClick={() => navigate.push('/')}
+              onClick={() => navigate.back()}
               title="Voltar"
             />
           </div>

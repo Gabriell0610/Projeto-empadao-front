@@ -7,8 +7,8 @@ export const registerSchema = z.object({
   senha: passwordValidation,
   telefone: z
     .string()
-    .min(11, 'O telefone possui menos de 21 caracteres')
-    .min(1, 'O telefone é obrigatório'),
+    .min(11, 'O telefone possui menos de 11 caracteres')
+    .max(11, 'O telefone possui mais de 11 caracteres'),
 })
 
 export type RegisterData = z.infer<typeof registerSchema>

@@ -39,9 +39,16 @@ const authOption: NextAuthOptions = {
       async authorize(credentials) {
         const res = await login(credentials)
 
+        if (!res) {
+          throw new Error('Email ou senha inválidos')
+        }
+
+        if (!res.access_token) {
+          throw new Error('Erro interno, tente novamente mais tarde')
+        }
+
         // Decodificando token para pegar id, email e role
         const decoded = jwtDecode<JWT>(res.access_token)
-        console.log(decoded)
 
         return {
           id: decoded.id, // Obrigatório para NextAuth

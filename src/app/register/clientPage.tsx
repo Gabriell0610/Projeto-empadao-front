@@ -1,11 +1,35 @@
 'use client'
 import { ButtonDefault } from '@/components/Button/Button'
 import { DefaultForm } from '@/components/DefaultForm/DefaultForm'
+import { useRegister } from '@/hooks/useRegister/useRegister'
+import { LoadingContext } from '@/providers/loadingProvider/loadingProvider'
 import { RegisterData, registerSchema } from '@/utils/zod/register.schema'
+import { useRouter } from 'next/navigation'
+import { useContext } from 'react'
+import toast from 'react-hot-toast'
 
 export const ClientPageRegister = () => {
-  const handleRegister = (data: RegisterData) => {
-    console.log(data)
+  const route = useRouter()
+  const { register } = useRegister()
+  const { isLoading, setIsLoading } = useContext(LoadingContext)
+  const handleRegister = async (data: RegisterData) => {
+    try {
+      setIsLoading(true)
+      const res = await register(data)
+      // console.log(res)
+
+      if (!res.success) {
+        toast.error(res.message)
+        setIsLoading(false)
+      } else {
+        toast.success(res.message)
+        setIsLoading(false)
+        route.push('/login')
+      }
+    } catch (error) {
+      console.log(error)
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -13,6 +37,7 @@ export const ClientPageRegister = () => {
       <DefaultForm
         schema={registerSchema}
         onSubmit={handleRegister}
+        isLoading={isLoading}
         fields={[
           {
             name: 'nome',

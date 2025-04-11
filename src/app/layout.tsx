@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { SomeChildrenInterface } from '@/utils/types/layout.type'
 import { SessionProvider } from '@/providers/sessionProvider'
 import { LoadingProvider } from '@/providers/loadingProvider/loadingProvider'
+import { Toaster } from 'react-hot-toast'
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -17,6 +18,7 @@ export default function RootLayout({ children }: SomeChildrenInterface) {
         <SessionProvider>
           <LoadingProvider>{children}</LoadingProvider>
         </SessionProvider>
+        <Toaster position="top-right" reverseOrder={false} />
       </body>
     </html>
   )

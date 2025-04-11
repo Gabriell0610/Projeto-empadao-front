@@ -20,7 +20,7 @@ export const ClientPageForgetPassword = () => {
             placeholder: 'Digite seu email',
           },
           {
-            name: 'senha',
+            name: 'password',
             label: 'Nova Senha',
             type: 'password',
             placeholder: 'Digite sua nova senha',
