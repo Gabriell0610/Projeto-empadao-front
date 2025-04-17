@@ -65,12 +65,14 @@ export const ClientPageRegister = () => {
         ]}
         childrenButton="Continuar"
       />
-      <p>
-        Já tem uma conta?{' '}
-        <ButtonDefault href={'/login'} variant={'link'}>
-          {'login'}
-        </ButtonDefault>
-      </p>
+      <div className="mt-5 flex justify-center">
+        <p>
+          Já tem uma conta?{' '}
+          <ButtonDefault href={'/login'} variant={'link'}>
+            {'login'}
+          </ButtonDefault>
+        </p>
+      </div>
     </div>
   )
 }

@@ -1,17 +1,69 @@
 'use client'
 import { DefaultForm } from '@/components/DefaultForm/DefaultForm'
-import { loginSchema } from '@/utils/zod/login.schema'
+import { useForgetPassword } from '@/hooks/useForgetPassword'
+import { LoadingContext } from '@/providers/loadingProvider/loadingProvider'
+import {
+  forgotPasswordSchema,
+  forgotPasswordDto,
+} from '@/utils/zod/forgetPassword'
+import { useRouter } from 'next/navigation'
+import { useContext, useState } from 'react'
+import toast from 'react-hot-toast'
 
 export const ClientPageForgetPassword = () => {
-  const handleRegister = (data: unknown) => {
-    console.log(data)
+  const [tokenNotGenerated, setTokenNotGenerated] = useState(true)
+  const { isLoading, setIsLoading } = useContext(LoadingContext)
+  const { generateToken, validateToken } = useForgetPassword()
+  const router = useRouter()
+
+  const handleGenerateToken = async (data: forgotPasswordDto) => {
+    try {
+      setIsLoading(true)
+      const res = await generateToken(data.email)
+
+      if (!res.success) {
+        setIsLoading(false)
+        toast.error(res.message)
+      } else {
+        setTokenNotGenerated(false)
+        toast.success(res.message)
+        setIsLoading(false)
+      }
+    } catch (error) {
+      console.error(error)
+      setIsLoading(false)
+    }
+  }
+
+  const handleValidateToken = async (data: forgotPasswordDto) => {
+    try {
+      setIsLoading(true)
+      const res = await validateToken(data)
+
+      if (!res.success) {
+        setIsLoading(false)
+        toast.error(res.message)
+      } else {
+        toast.success('Aguarde ser redirecionado!')
+        router.push('/newPassword')
+        setIsLoading(false)
+      }
+    } catch (error) {
+      console.error(error)
+      setIsLoading(false)
+    }
   }
 
   return (
     <div>
+      <p>
+        Informe seu email para gerar um token de segurança. Fique atento ao seu
+        email!
+      </p>
       <DefaultForm
-        schema={loginSchema}
-        onSubmit={handleRegister}
+        schema={forgotPasswordSchema}
+        onSubmit={tokenNotGenerated ? handleGenerateToken : handleValidateToken}
+        isLoading={isLoading}
         fields={[
           {
             name: 'email',
@@ -20,13 +72,14 @@ export const ClientPageForgetPassword = () => {
             placeholder: 'Digite seu email',
           },
           {
-            name: 'password',
-            label: 'Nova Senha',
-            type: 'password',
-            placeholder: 'Digite sua nova senha',
+            name: 'token',
+            label: 'Token',
+            type: 'number',
+            placeholder: 'Digite o token',
+            disabled: tokenNotGenerated,
           },
         ]}
-        childrenButton="Salvar"
+        childrenButton={tokenNotGenerated ? 'Gerar Token' : 'Continuar'}
       />
     </div>
   )
