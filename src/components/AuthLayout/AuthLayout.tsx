@@ -43,6 +43,7 @@ export const AuthLayout = ({
           fill
           priority
           quality={100}
+          className="object-contain object-center"
         />
       </div>
     </main>

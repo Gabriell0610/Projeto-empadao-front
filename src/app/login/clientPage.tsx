@@ -32,13 +32,13 @@ export const ClientPageLogin = () => {
         } else {
           router.push('/client')
         }
-        toast.success('Loagin efetuado com sucesso')
+        toast.success('Login efetuado com sucesso')
       } else {
         toast.error(res.error)
         setIsLoading(false)
       }
     } catch (error) {
-      console.error(error)
+      console.log(error)
       setIsLoading(false)
     }
   }

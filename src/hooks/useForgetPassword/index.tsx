@@ -1,10 +1,11 @@
-import { forgotPasswordDto } from '@/utils/zod/forgetPassword'
+import { NewPasswordData } from '@/app/newPassword/clientPage'
+import { sendEmailDto, validateTokenDto } from '@/utils/zod/forgetPassword'
 
 export function useForgetPassword() {
-  async function generateToken(email: string) {
+  async function generateToken(data: sendEmailDto) {
     const req = await fetch('/api/generateToken/', {
       method: 'POST',
-      body: JSON.stringify({ email }),
+      body: JSON.stringify(data),
     })
 
     const res = await req.json()
@@ -12,7 +13,7 @@ export function useForgetPassword() {
     return res
   }
 
-  async function validateToken(data: forgotPasswordDto) {
+  async function validateToken(data: validateTokenDto) {
     const req = await fetch('/api/validateToken/', {
       method: 'POST',
       body: JSON.stringify(data),
@@ -23,7 +24,16 @@ export function useForgetPassword() {
     return res
   }
 
-  async function resetPassword() {}
+  async function resetPassword(data: NewPasswordData) {
+    const req = await fetch('/api/resetPassword/', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    })
+
+    const res = await req.json()
+    console.log(res)
+    return res
+  }
 
   return {
     generateToken,

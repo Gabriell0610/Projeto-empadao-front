@@ -3,8 +3,10 @@ import { DefaultForm } from '@/components/DefaultForm/DefaultForm'
 import { useForgetPassword } from '@/hooks/useForgetPassword'
 import { LoadingContext } from '@/providers/loadingProvider/loadingProvider'
 import {
-  forgotPasswordSchema,
-  forgotPasswordDto,
+  sendEmailDto,
+  sendEmailSchema,
+  validateTokenDto,
+  validateTokenSchema,
 } from '@/utils/zod/forgetPassword'
 import { useRouter } from 'next/navigation'
 import { useContext, useState } from 'react'
@@ -16,10 +18,10 @@ export const ClientPageForgetPassword = () => {
   const { generateToken, validateToken } = useForgetPassword()
   const router = useRouter()
 
-  const handleGenerateToken = async (data: forgotPasswordDto) => {
+  const handleGenerateToken = async (data: sendEmailDto) => {
     try {
       setIsLoading(true)
-      const res = await generateToken(data.email)
+      const res = await generateToken(data)
 
       if (!res.success) {
         setIsLoading(false)
@@ -30,57 +32,75 @@ export const ClientPageForgetPassword = () => {
         setIsLoading(false)
       }
     } catch (error) {
-      console.error(error)
+      console.log(error)
       setIsLoading(false)
     }
   }
 
-  const handleValidateToken = async (data: forgotPasswordDto) => {
+  const handleValidateToken = async (data: validateTokenDto) => {
     try {
       setIsLoading(true)
       const res = await validateToken(data)
 
       if (!res.success) {
-        setIsLoading(false)
+        setTokenNotGenerated(true)
         toast.error(res.message)
+        setIsLoading(false)
       } else {
         toast.success('Aguarde ser redirecionado!')
         router.push('/newPassword')
+        localStorage.setItem('userEmail', data.email)
+        localStorage.setItem('userToken', data.token)
         setIsLoading(false)
       }
     } catch (error) {
-      console.error(error)
+      console.log(error)
       setIsLoading(false)
     }
   }
 
   return (
-    <div>
-      <p>
-        Informe seu email para gerar um token de segurança. Fique atento ao seu
-        email!
-      </p>
-      <DefaultForm
-        schema={forgotPasswordSchema}
-        onSubmit={tokenNotGenerated ? handleGenerateToken : handleValidateToken}
-        isLoading={isLoading}
-        fields={[
-          {
-            name: 'email',
-            label: 'Email',
-            type: 'email',
-            placeholder: 'Digite seu email',
-          },
-          {
-            name: 'token',
-            label: 'Token',
-            type: 'number',
-            placeholder: 'Digite o token',
-            disabled: tokenNotGenerated,
-          },
-        ]}
-        childrenButton={tokenNotGenerated ? 'Gerar Token' : 'Continuar'}
-      />
-    </div>
+    <>
+      {tokenNotGenerated ? (
+        <div>
+          <p>
+            Informe seu email para gerar um token de segurança. Fique atento ao
+            seu email!
+          </p>
+          <DefaultForm
+            schema={sendEmailSchema}
+            onSubmit={handleGenerateToken}
+            isLoading={isLoading}
+            fields={[
+              {
+                name: 'email',
+                label: 'Email',
+                type: 'email',
+                placeholder: 'Digite seu email',
+              },
+            ]}
+            childrenButton={'Gerar Token'}
+          />
+        </div>
+      ) : (
+        <div>
+          <p>Coloque o token que você recebeu no seu email no campo abaixo!</p>
+          <DefaultForm
+            schema={validateTokenSchema}
+            onSubmit={handleValidateToken}
+            isLoading={isLoading}
+            fields={[
+              {
+                name: 'token',
+                label: 'Token',
+                type: 'number',
+                placeholder: 'Digite seu token',
+              },
+            ]}
+            childrenButton={'Continuar'}
+          />
+        </div>
+      )}
+    </>
   )
 }
