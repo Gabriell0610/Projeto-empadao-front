@@ -6,10 +6,12 @@ import { InputField } from '../InputField/InputField'
 import { ButtonDefault } from '../Button/Button'
 
 interface FormProps<T extends ZodSchema<any>> {
+  // "TypeOf<T> me dá o objeto de tipos."
+  // "keyof TypeOf<T> me dá só os nomes das propriedades — que são exatamente os nomes dos inputs que o register() precisa."
   schema: T
   onSubmit: (data: TypeOf<T>) => void
   fields: {
-    name: keyof TypeOf<T> // o name tem que ser o que existe no schema, pois o useForm tem que saber exatamente o tipo de nome que está no schem
+    name: keyof TypeOf<T>
     label: string
     type?: string
     placeholder: string
