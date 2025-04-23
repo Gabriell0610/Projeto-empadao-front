@@ -4,10 +4,11 @@ import { JWT, NextAuthOptions } from 'next-auth'
 import CredentialProvider from 'next-auth/providers/credentials'
 import { jwtDecode } from 'jwt-decode'
 import { AccessProfile } from '@/constants/enums/accessProfile'
+import { baseUrl } from '@/utils/helpers'
 
 const login = async (credentials: any) => {
   try {
-    const res = await fetch('http://localhost:1338/api/auth/login', {
+    const res = await fetch(`${baseUrl()}/auth/login`, {
       method: 'POST',
       body: JSON.stringify({
         email: credentials?.email,

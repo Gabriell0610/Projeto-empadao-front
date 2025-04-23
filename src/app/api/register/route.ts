@@ -1,9 +1,10 @@
 // import { baseUrl } from '@/utils/helpers'
+import { baseUrl } from '@/utils/helpers'
 import { NextResponse } from 'next/server'
 
 export async function POST(request: Request) {
   const data = await request.json()
-  const req = await fetch(`http://localhost:1338/api/auth/register`, {
+  const req = await fetch(`${baseUrl()}/auth/register`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),

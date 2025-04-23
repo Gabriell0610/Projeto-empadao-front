@@ -40,6 +40,7 @@ export const ClientPageForgetPassword = () => {
   const handleValidateToken = async (data: validateTokenDto) => {
     try {
       setIsLoading(true)
+      console.log(data.email)
       const res = await validateToken(data)
 
       if (!res.success) {
