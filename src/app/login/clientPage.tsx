@@ -82,7 +82,7 @@ export const ClientPageLogin = () => {
             variant="link"
             isLoading={isLoading}
           >
-            Cadastra-se
+            Cadastre-se
           </ButtonDefault>
         </p>
       </div>

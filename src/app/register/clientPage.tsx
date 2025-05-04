@@ -69,7 +69,7 @@ export const ClientPageRegister = () => {
         <p>
           Já tem uma conta?{' '}
           <ButtonDefault href={'/login'} variant={'link'}>
-            {'login'}
+            {'Login'}
           </ButtonDefault>
         </p>
       </div>

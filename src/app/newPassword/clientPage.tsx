@@ -20,8 +20,10 @@ export const ClientPageNewPassword = () => {
   const { isLoading, setIsLoading } = useContext(LoadingContext)
   const { resetPassword } = useForgetPassword()
   const router = useRouter()
+
   const userEmail = localStorage.getItem('userEmail')
   const token = localStorage.getItem('userToken')
+
   const handleNewPassword = async (data: resetPasswordDto) => {
     try {
       setIsLoading(true)
