@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { ClientPageRegister } from './clientPage'
-import imageRegister from '../../../public/image_register.png'
+import imageRegister from '../../../public/bg-teste.jpg'
 import { AuthLayout } from '@/components/AuthLayout/AuthLayout'
 export default function RegisterPage() {
   return (
