@@ -7,6 +7,7 @@ import {
   resetPasswordDto,
 } from '@/utils/zod/forgetPassword'
 import { useRouter } from 'next/navigation'
+import { destroyCookie } from 'nookies'
 import { useContext } from 'react'
 import toast from 'react-hot-toast'
 
@@ -43,6 +44,8 @@ export const ClientPageNewPassword = () => {
         toast.success('Senha alterada com sucesso!')
         setIsLoading(false)
         router.push('/login')
+        destroyCookie(null, 'userEmail')
+        destroyCookie(null, 'userToken')
       }
     } catch (error) {
       console.log(error)

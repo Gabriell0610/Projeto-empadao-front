@@ -2,11 +2,13 @@
 "use client";
 import { SomeChildrenInterface } from "@/utils/types/layout.type";
 import Image, { StaticImageData } from "next/image";
+import { twMerge } from "tailwind-merge";
 
 interface LayoutProps extends SomeChildrenInterface {
   imageUrl?: StaticImageData;
   altImage: string;
   title: string;
+  mode?: string
 }
 
 export const AuthLayout = ({
@@ -14,14 +16,15 @@ export const AuthLayout = ({
   imageUrl,
   altImage,
   title,
+  mode
 }: LayoutProps) => {
   // const navigate = useRouter();
  return (
     <main className="flex h-screen flex-col md:flex-row">
       {/* Seção do formulário */}
-      <section className="flex flex-1 flex-col items-center justify-center overflow-y-auto lg:w-1/2">
-        <div className="mx-auto w-full max-w-[600px] px-8 py-10 md:max-w-[500px]">
-          <h1 className="text-lg font-semibold text-text-primary text-start mt-7">
+      <section className="flex flex-1 flex-col items-center overflow-y-auto justify-center lg:w-1/2">
+        <div className="mx-auto w-full max-w-[600px] px-8 py-2 md:max-w-[500px]">
+          <h1 className="text-lg font-semibold text-text-primary text-start mt-11">
             {title}
           </h1>
           {children}
@@ -36,7 +39,7 @@ export const AuthLayout = ({
           fill
           priority
           quality={100}
-          className="object-cover object-center"
+          className={twMerge(mode === 'register' ? 'object-cover' : 'object-contain' )}
         />
       </div>
     </main>

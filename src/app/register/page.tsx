@@ -1,10 +1,15 @@
 /* eslint-disable prettier/prettier */
 import { ClientPageRegister } from './clientPage'
-import imageRegister from '../../../public/bg-teste.jpg'
+import imageRegister from '../../../public/image_register.png'
 import { AuthLayout } from '@/components/AuthLayout/AuthLayout'
 export default function RegisterPage() {
   return (
-    <AuthLayout altImage='Desenho de duas pessoas conversando' imageUrl={imageRegister} title={'Crie sua conta e aproveite uma experiência personalizada!'}>
+    <AuthLayout 
+      altImage='Imagem com pratos de comidas no estilo de desenho' 
+      imageUrl={imageRegister} 
+      title={'Crie sua conta e aproveite uma experiência personalizada!'}
+      mode='register'
+      >
       <ClientPageRegister/>
     </AuthLayout>
   )

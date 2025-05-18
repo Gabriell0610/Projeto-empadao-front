@@ -11,12 +11,25 @@ import {
 import { useRouter } from 'next/navigation'
 import { useContext, useState } from 'react'
 import toast from 'react-hot-toast'
+import { setCookie } from 'nookies'
 
 export const ClientPageForgetPassword = () => {
   const [tokenNotGenerated, setTokenNotGenerated] = useState(true)
   const { isLoading, setIsLoading } = useContext(LoadingContext)
   const { generateToken, validateToken } = useForgetPassword()
   const router = useRouter()
+
+  function saveDataInCookies(data: validateTokenDto) {
+    setCookie(null, 'userEmail', data.email, {
+      path: '/', // necessário para estar acessível em qualquer rota
+      maxAge: 60 * 10, // opcional: tempo de expiração em segundos (ex: 10 minutos)
+    })
+
+    setCookie(null, 'userToken', data.token, {
+      path: '/',
+      maxAge: 60 * 10,
+    })
+  }
 
   const handleGenerateToken = async (data: sendEmailDto) => {
     try {
@@ -49,9 +62,8 @@ export const ClientPageForgetPassword = () => {
         setIsLoading(false)
       } else {
         toast.success('Aguarde ser redirecionado!')
+        saveDataInCookies(data)
         router.push('/newPassword')
-        localStorage.setItem('userEmail', data.email)
-        localStorage.setItem('userToken', data.token)
         setIsLoading(false)
       }
     } catch (error) {

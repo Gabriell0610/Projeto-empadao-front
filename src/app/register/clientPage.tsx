@@ -12,6 +12,7 @@ export const ClientPageRegister = () => {
   const route = useRouter()
   const { register } = useRegister()
   const { isLoading, setIsLoading } = useContext(LoadingContext)
+
   const handleRegister = async (data: RegisterData) => {
     try {
       setIsLoading(true)

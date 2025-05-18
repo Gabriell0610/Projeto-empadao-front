@@ -33,11 +33,7 @@ export function InputField({
         type={type}
         {...rest}
       />
-      {error && (
-        <p className="text-sm font-semibold text-errors-textError">
-          {error.message}
-        </p>
-      )}
+      {error && <p className="text-errors-textError">{error.message}</p>}
     </div>
   )
 }
