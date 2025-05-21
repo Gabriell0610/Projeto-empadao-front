@@ -12,6 +12,7 @@ import { useRouter } from 'next/navigation'
 import { useContext, useState } from 'react'
 import toast from 'react-hot-toast'
 import { setCookie } from 'nookies'
+import { getSafeErrorMessage } from '@/utils/helpers'
 
 export const ClientPageForgetPassword = () => {
   const [tokenNotGenerated, setTokenNotGenerated] = useState(true)
@@ -38,10 +39,10 @@ export const ClientPageForgetPassword = () => {
 
       if (!res.success) {
         setIsLoading(false)
-        toast.error(res.message)
+        toast.error(getSafeErrorMessage(res.message))
       } else {
         setTokenNotGenerated(false)
-        toast.success(res.message)
+        toast.success(getSafeErrorMessage(res.message))
         setIsLoading(false)
       }
     } catch (error) {

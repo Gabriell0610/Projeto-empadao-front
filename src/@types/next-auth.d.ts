@@ -7,6 +7,7 @@ declare module 'next-auth' {
     email: string
     role: AccessProfile
     accessToken: string
+    expiresAt: number
   }
 
   interface Session {
@@ -23,5 +24,6 @@ declare module 'next-auth' {
     email: string
     role: AccessProfile
     accessToken: string
+    expiresAt: number
   }
 }

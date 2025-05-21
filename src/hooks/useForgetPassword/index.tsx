@@ -9,7 +9,6 @@ export function useForgetPassword() {
     })
 
     const res = await req.json()
-    console.log(res)
     return res
   }
 
@@ -20,7 +19,6 @@ export function useForgetPassword() {
     })
 
     const res = await req.json()
-    console.log(res)
     return res
   }
 
@@ -31,7 +29,6 @@ export function useForgetPassword() {
     })
 
     const res = await req.json()
-    console.log(res)
     return res
   }
 

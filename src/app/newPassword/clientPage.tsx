@@ -2,6 +2,7 @@
 import { DefaultForm } from '@/components/DefaultForm/DefaultForm'
 import { useForgetPassword } from '@/hooks/useForgetPassword'
 import { LoadingContext } from '@/providers/loadingProvider/loadingProvider'
+import { getSafeErrorMessage } from '@/utils/helpers'
 import {
   resetPasswordSchema,
   resetPasswordDto,
@@ -38,10 +39,10 @@ export const ClientPageNewPassword = () => {
       const res = await resetPassword(dataToSend)
 
       if (!res.success) {
-        toast.error(res.message)
+        toast.error(getSafeErrorMessage(res.message))
         setIsLoading(false)
       } else {
-        toast.success('Senha alterada com sucesso!')
+        toast.success(getSafeErrorMessage(res.message))
         setIsLoading(false)
         router.push('/login')
         destroyCookie(null, 'userEmail')

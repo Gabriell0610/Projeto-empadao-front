@@ -6,6 +6,17 @@ import { jwtDecode } from 'jwt-decode'
 import { AccessProfile } from '@/constants/enums/accessProfile'
 import { baseUrl } from '@/utils/helpers'
 
+// Estendendo o tipo JWT para incluir nossas propriedades personalizadas
+declare module 'next-auth/jwt' {
+  interface JWT {
+    id: string
+    email: string
+    role: AccessProfile
+    accessToken: string
+    expiresAt: number
+  }
+}
+
 const login = async (credentials: any) => {
   try {
     const res = await fetch(`${baseUrl()}/auth/login`, {
@@ -56,17 +67,24 @@ const authOption: NextAuthOptions = {
           email: decoded.email,
           role: decoded.role,
           accessToken: res.access_token,
+          expiresAt: decoded.expiresAt * 1000,
         }
       },
     }),
   ],
   callbacks: {
+    // aqui eu to salvando os dados vindo do backend no token do nextAuth
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id
         token.email = user.email
         token.role = user.role
         token.accessToken = user.accessToken
+        token.expiresAt = user.expiresAt
+      }
+
+      if (token.expiresAt && Date.now() > token.expiresAt) {
+        throw new Error('Sessão expirada')
       }
 
       return token
@@ -86,6 +104,7 @@ const authOption: NextAuthOptions = {
     signIn: '/login',
   },
 }
+
 const handler = NextAuth(authOption)
 
 export { handler as GET, handler as POST }

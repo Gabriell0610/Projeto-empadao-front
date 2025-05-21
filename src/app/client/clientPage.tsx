@@ -2,7 +2,7 @@
 
 import { LoadingComponent } from '@/components/Loading/LoadingComponent'
 import { LoadingContext } from '@/providers/loadingProvider/loadingProvider'
-import { useSession } from 'next-auth/react'
+import { signOut, useSession } from 'next-auth/react'
 import { useContext } from 'react'
 
 export default function ClientPage() {
@@ -25,6 +25,7 @@ export default function ClientPage() {
         <p>ID: {session?.user.id}</p>
         <p>Role: {session?.user.role}</p>
         <p>Token: {session?.user.accessToken}</p>
+        <p onClick={() => signOut({ callbackUrl: '/login' })}>sair</p>
       </div>
       {isLoading && <LoadingComponent mode={'fullScreen'} />}
     </>

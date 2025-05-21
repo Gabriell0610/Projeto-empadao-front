@@ -3,6 +3,7 @@ import { ButtonDefault } from '@/components/Button/Button'
 import { DefaultForm } from '@/components/DefaultForm/DefaultForm'
 import { useRegister } from '@/hooks/useRegister/useRegister'
 import { LoadingContext } from '@/providers/loadingProvider/loadingProvider'
+import { getSafeErrorMessage } from '@/utils/helpers'
 import { RegisterData, registerSchema } from '@/utils/zod/register.schema'
 import { useRouter } from 'next/navigation'
 import { useContext } from 'react'
@@ -17,13 +18,12 @@ export const ClientPageRegister = () => {
     try {
       setIsLoading(true)
       const res = await register(data)
-      // console.log(res)
 
       if (!res.success) {
-        toast.error(res.message)
+        toast.error(getSafeErrorMessage(res.message))
         setIsLoading(false)
       } else {
-        toast.success(res.message)
+        toast.success(getSafeErrorMessage(res.message))
         setIsLoading(false)
         route.push('/login')
       }
