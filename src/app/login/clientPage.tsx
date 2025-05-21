@@ -1,7 +1,7 @@
 'use client';
 import { ButtonDefault } from '@/components/Button/Button';
 import { DefaultForm } from '@/components/DefaultForm/DefaultForm';
-import { AccessProfile } from '../../constants/enums/AccessProfile';
+import { AccessProfile } from '@/constants/enums/AccessProfile';
 import { LoadingContext } from '@/providers/loadingProvider/loadingProvider';
 import { loginDto, loginSchema } from '@/utils/zod/login.schema';
 import { getSession, signIn } from 'next-auth/react';
