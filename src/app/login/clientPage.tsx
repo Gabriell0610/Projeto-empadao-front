@@ -1,47 +1,47 @@
-'use client'
-import { ButtonDefault } from '@/components/Button/Button'
-import { DefaultForm } from '@/components/DefaultForm/DefaultForm'
+'use client';
+import { ButtonDefault } from '@/components/Button/Button';
+import { DefaultForm } from '@/components/DefaultForm/DefaultForm';
 // import { LoadingComponent } from '@/components/Loading/LoadingComponent'
-import { AccessProfile } from '@/constants/enums/accessProfile'
-import { LoadingContext } from '@/providers/loadingProvider/loadingProvider'
-import { loginDto, loginSchema } from '@/utils/zod/login.schema'
-import { getSession, signIn } from 'next-auth/react'
-import { useRouter } from 'next/navigation'
-import { useContext } from 'react'
-import toast from 'react-hot-toast'
+import { AccessProfile } from '@/constants/enums/AccessProfile';
+import { LoadingContext } from '@/providers/loadingProvider/loadingProvider';
+import { loginDto, loginSchema } from '@/utils/zod/login.schema';
+import { getSession, signIn } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import { useContext } from 'react';
+import toast from 'react-hot-toast';
 
 export const ClientPageLogin = () => {
-  const router = useRouter()
+  const router = useRouter();
 
-  const { isLoading, setIsLoading } = useContext(LoadingContext)
+  const { isLoading, setIsLoading } = useContext(LoadingContext);
 
   const handleLogin = async (data: loginDto) => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       const res = await signIn('credentials', {
         redirect: false,
         email: data.email,
         password: data.password,
-      })
+      });
 
       if (!res?.error) {
-        const session = await getSession() // Pega a session atualizada do usuário logado
+        const session = await getSession(); // Pega a session atualizada do usuário logado
 
         if (session?.user.role === AccessProfile.ADMIN) {
-          router.push('/admin')
+          router.push('/admin');
         } else {
-          router.push('/client')
+          router.push('/client');
         }
-        toast.success('Login efetuado com sucesso')
+        toast.success('Login efetuado com sucesso');
       } else {
-        toast.error(res.error)
-        setIsLoading(false)
+        toast.error(res.error);
+        setIsLoading(false);
       }
     } catch (error) {
-      console.log(error)
-      setIsLoading(false)
+      console.log(error);
+      setIsLoading(false);
     }
-  }
+  };
 
   return (
     <div>
@@ -87,5 +87,5 @@ export const ClientPageLogin = () => {
         </p>
       </div>
     </div>
-  )
-}
+  );
+};

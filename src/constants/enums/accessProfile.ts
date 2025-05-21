@@ -1,6 +1,6 @@
 enum AccessProfile {
- ADMIN = "admin",
- CLIENT = "client",
+  ADMIN = 'ADMIN',
+  CLIENT = 'CLIENT',
 }
 
-export { AccessProfile }
+export { AccessProfile };

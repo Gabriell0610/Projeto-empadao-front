@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z } from 'zod';
 
 export const passwordValidation = z
   .string()
@@ -7,4 +7,4 @@ export const passwordValidation = z
   .regex(/[A-Z]/, 'A senha deve conter pelo menos uma letra maiúscula')
   .regex(/[a-z]/, 'A senha deve conter pelo menos uma letra minúscula')
   .regex(/[0-9]/, 'A senha deve conter pelo menos um número')
-  .regex(/[\W_]/, 'A senha deve conter pelo menos um caractere especial')
+  .regex(/[\W_]/, 'A senha deve conter pelo menos um caractere especial');

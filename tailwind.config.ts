@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
-import type { Config } from 'tailwindcss'
-import { projectColors } from './theme/projectColors'
+import type { Config } from 'tailwindcss';
+import { projectColors } from './theme/projectColors';
 
 export const config: Config = {
   darkMode: ['class'],
@@ -17,6 +17,6 @@ export const config: Config = {
     },
   },
   plugins: [],
-}
+};
 
-export default config
+export default config;

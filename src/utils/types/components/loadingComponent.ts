@@ -1,4 +1,4 @@
 export interface LoadingComponentInterface {
-  size?: number
-  mode?: string
+  size?: number;
+  mode?: string;
 }

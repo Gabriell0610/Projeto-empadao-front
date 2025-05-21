@@ -1,5 +1,5 @@
-import ClientPage from './clientPage'
+import ClientPage from './clientPage';
 
 export default function ClientDefaultPage() {
-  return <ClientPage />
+  return <ClientPage />;
 }

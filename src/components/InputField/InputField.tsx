@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ComponentProps } from 'react'
-import { FieldError, UseFormRegister } from 'react-hook-form'
+import { ComponentProps } from 'react';
+import { FieldError, UseFormRegister } from 'react-hook-form';
 
-type InputProps = ComponentProps<'input'>
+type InputProps = ComponentProps<'input'>;
 
 interface InputsFieldsProps extends InputProps {
-  register: UseFormRegister<any>
-  error?: FieldError
-  label: string
-  name: string
+  register: UseFormRegister<any>;
+  error?: FieldError;
+  label: string;
+  name: string;
 }
 
 export function InputField({
@@ -35,5 +35,5 @@ export function InputField({
       />
       {error && <p className="text-errors-textError">{error.message}</p>}
     </div>
-  )
+  );
 }

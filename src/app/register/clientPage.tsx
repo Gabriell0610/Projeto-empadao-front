@@ -1,37 +1,37 @@
-'use client'
-import { ButtonDefault } from '@/components/Button/Button'
-import { DefaultForm } from '@/components/DefaultForm/DefaultForm'
-import { useRegister } from '@/hooks/useRegister/useRegister'
-import { LoadingContext } from '@/providers/loadingProvider/loadingProvider'
-import { getSafeErrorMessage } from '@/utils/helpers'
-import { RegisterData, registerSchema } from '@/utils/zod/register.schema'
-import { useRouter } from 'next/navigation'
-import { useContext } from 'react'
-import toast from 'react-hot-toast'
+'use client';
+import { ButtonDefault } from '@/components/Button/Button';
+import { DefaultForm } from '@/components/DefaultForm/DefaultForm';
+import { useRegister } from '@/hooks/useRegister/useRegister';
+import { LoadingContext } from '@/providers/loadingProvider/loadingProvider';
+import { getSafeErrorMessage } from '@/utils/helpers';
+import { RegisterData, registerSchema } from '@/utils/zod/register.schema';
+import { useRouter } from 'next/navigation';
+import { useContext } from 'react';
+import toast from 'react-hot-toast';
 
 export const ClientPageRegister = () => {
-  const route = useRouter()
-  const { register } = useRegister()
-  const { isLoading, setIsLoading } = useContext(LoadingContext)
+  const route = useRouter();
+  const { register } = useRegister();
+  const { isLoading, setIsLoading } = useContext(LoadingContext);
 
   const handleRegister = async (data: RegisterData) => {
     try {
-      setIsLoading(true)
-      const res = await register(data)
+      setIsLoading(true);
+      const res = await register(data);
 
       if (!res.success) {
-        toast.error(getSafeErrorMessage(res.message))
-        setIsLoading(false)
+        toast.error(getSafeErrorMessage(res.message));
+        setIsLoading(false);
       } else {
-        toast.success(getSafeErrorMessage(res.message))
-        setIsLoading(false)
-        route.push('/login')
+        toast.success(getSafeErrorMessage(res.message));
+        setIsLoading(false);
+        route.push('/login');
       }
     } catch (error) {
-      console.log(error)
-      setIsLoading(false)
+      console.log(error);
+      setIsLoading(false);
     }
-  }
+  };
 
   return (
     <div>
@@ -75,5 +75,5 @@ export const ClientPageRegister = () => {
         </p>
       </div>
     </div>
-  )
-}
+  );
+};

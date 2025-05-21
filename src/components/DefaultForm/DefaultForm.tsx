@@ -1,24 +1,24 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { zodResolver } from '@hookform/resolvers/zod'
-import { FieldError, useForm } from 'react-hook-form'
-import { TypeOf, ZodSchema } from 'zod'
-import { InputField } from '../InputField/InputField'
-import { ButtonDefault } from '../Button/Button'
+import { zodResolver } from '@hookform/resolvers/zod';
+import { FieldError, useForm } from 'react-hook-form';
+import { TypeOf, ZodSchema } from 'zod';
+import { InputField } from '../InputField/InputField';
+import { ButtonDefault } from '../Button/Button';
 
 interface FormProps<T extends ZodSchema<any>> {
   // "TypeOf<T> me dá o objeto de tipos."
   // "keyof TypeOf<T> me dá só os nomes das propriedades — que são exatamente os nomes dos inputs que o register() precisa."
-  schema: T
-  onSubmit: (data: TypeOf<T>) => void
+  schema: T;
+  onSubmit: (data: TypeOf<T>) => void;
   fields: {
-    name: keyof TypeOf<T>
-    label: string
-    type?: string
-    placeholder: string
-    disabled?: boolean
-  }[]
-  childrenButton?: string
-  isLoading?: boolean
+    name: keyof TypeOf<T>;
+    label: string;
+    type?: string;
+    placeholder: string;
+    disabled?: boolean;
+  }[];
+  childrenButton?: string;
+  isLoading?: boolean;
 }
 
 export function DefaultForm<T extends ZodSchema<any>>({
@@ -34,7 +34,7 @@ export function DefaultForm<T extends ZodSchema<any>>({
     formState: { errors },
   } = useForm<TypeOf<T>>({
     resolver: zodResolver(schema),
-  })
+  });
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
@@ -54,5 +54,5 @@ export function DefaultForm<T extends ZodSchema<any>>({
         {childrenButton}
       </ButtonDefault>
     </form>
-  )
+  );
 }

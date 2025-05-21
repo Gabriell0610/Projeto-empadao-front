@@ -1,6 +1,6 @@
-import { ClientPageLogin } from './clientPage'
-import imageLogin from '../../../public/image_login.png'
-import { AuthLayout } from '@/components/AuthLayout/AuthLayout'
+import { ClientPageLogin } from './clientPage';
+import imageLogin from '../../../public/image_login.png';
+import { AuthLayout } from '@/components/AuthLayout/AuthLayout';
 export default function LoginPage() {
   return (
     <AuthLayout
@@ -10,5 +10,5 @@ export default function LoginPage() {
     >
       <ClientPageLogin />
     </AuthLayout>
-  )
+  );
 }

@@ -24,4 +24,4 @@ export const projectColors = {
   errors: {
     textError: '#DC2626',
   },
-}
+};

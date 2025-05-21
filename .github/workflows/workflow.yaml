@@ -1,24 +1,24 @@
 name: FrontEnd CI
 
-on: 
-  push: 
+on:
+  push:
     branches:
       - main
       - develop
-      - "feat/*"
+      - 'feat/*'
   pull_request:
     branches:
-    - main
-    - develop
+      - main
+      - develop
 
-jobs: 
-   continuous-integration:
+jobs:
+  continuous-integration:
     runs-on: ubuntu-latest
 
     steps:
       - name: checar o código do repositório
         uses: actions/checkout@v3
-      
+
       - name: Using node.js
         uses: actions/setup-node@v3
         with:

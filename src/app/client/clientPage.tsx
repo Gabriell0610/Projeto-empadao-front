@@ -1,18 +1,18 @@
-'use client'
+'use client';
 
-import { LoadingComponent } from '@/components/Loading/LoadingComponent'
-import { LoadingContext } from '@/providers/loadingProvider/loadingProvider'
-import { signOut, useSession } from 'next-auth/react'
-import { useContext } from 'react'
+import { LoadingComponent } from '@/components/Loading/LoadingComponent';
+import { LoadingContext } from '@/providers/loadingProvider/loadingProvider';
+import { signOut, useSession } from 'next-auth/react';
+import { useContext } from 'react';
 
 export default function ClientPage() {
-  const { data: session } = useSession()
-  const { isLoading, setIsLoading } = useContext(LoadingContext)
+  const { data: session } = useSession();
+  const { isLoading, setIsLoading } = useContext(LoadingContext);
 
   if (!session) {
-    setIsLoading(true)
+    setIsLoading(true);
   } else {
-    setIsLoading(false)
+    setIsLoading(false);
   }
 
   return (
@@ -29,5 +29,5 @@ export default function ClientPage() {
       </div>
       {isLoading && <LoadingComponent mode={'fullScreen'} />}
     </>
-  )
+  );
 }

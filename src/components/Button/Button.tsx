@@ -1,18 +1,18 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import Link from 'next/link'
-import { ComponentProps } from 'react'
-import { IconType } from 'react-icons'
-import { twMerge } from 'tailwind-merge'
-import { LoadingComponent } from '../Loading/LoadingComponent'
+import Link from 'next/link';
+import { ComponentProps } from 'react';
+import { IconType } from 'react-icons';
+import { twMerge } from 'tailwind-merge';
+import { LoadingComponent } from '../Loading/LoadingComponent';
 
-type ButtonProps = ComponentProps<'button'>
-type VariantButton = 'primary' | 'secondary' | 'link'
+type ButtonProps = ComponentProps<'button'>;
+type VariantButton = 'primary' | 'secondary' | 'link';
 
 interface ButtonInterface extends ButtonProps {
-  variant?: VariantButton
-  icon?: IconType
-  href?: string
-  isLoading?: boolean
+  variant?: VariantButton;
+  icon?: IconType;
+  href?: string;
+  isLoading?: boolean;
 }
 
 export const ButtonDefault = ({
@@ -27,9 +27,9 @@ export const ButtonDefault = ({
   className,
   ...rest
 }: ButtonInterface) => {
-  const isLink = variant === 'link'
-  const isPrimary = variant === 'primary'
-  const isSecondary = variant === 'secondary'
+  const isLink = variant === 'link';
+  const isPrimary = variant === 'primary';
+  const isSecondary = variant === 'secondary';
 
   if (isLink) {
     return (
@@ -43,7 +43,7 @@ export const ButtonDefault = ({
       >
         {children}
       </Link>
-    )
+    );
   }
 
   return (
@@ -67,5 +67,5 @@ export const ButtonDefault = ({
         children
       )}
     </button>
-  )
-}
+  );
+};

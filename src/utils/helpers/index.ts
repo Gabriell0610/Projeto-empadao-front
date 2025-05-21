@@ -1,2 +1,2 @@
-export * from './url'
-export * from './reqMessage'
+export * from './url';
+export * from './reqMessage';

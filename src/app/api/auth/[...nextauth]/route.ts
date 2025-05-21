@@ -1,19 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import NextAuth from 'next-auth/next'
-import { JWT, NextAuthOptions } from 'next-auth'
-import CredentialProvider from 'next-auth/providers/credentials'
-import { jwtDecode } from 'jwt-decode'
-import { AccessProfile } from '@/constants/enums/accessProfile'
-import { baseUrl } from '@/utils/helpers'
+import NextAuth from 'next-auth/next';
+import { JWT, NextAuthOptions } from 'next-auth';
+import CredentialProvider from 'next-auth/providers/credentials';
+import { jwtDecode } from 'jwt-decode';
+import { AccessProfile } from '@/constants/enums/AccessProfile';
+import { baseUrl } from '@/utils/helpers';
 
 // Estendendo o tipo JWT para incluir nossas propriedades personalizadas
 declare module 'next-auth/jwt' {
   interface JWT {
-    id: string
-    email: string
-    role: AccessProfile
-    accessToken: string
-    expiresAt: number
+    id: string;
+    email: string;
+    role: AccessProfile;
+    accessToken: string;
+    expiresAt: number;
   }
 }
 
@@ -26,19 +26,19 @@ const login = async (credentials: any) => {
         password: credentials?.password,
       }),
       headers: { 'Content-Type': 'application/json' },
-    })
+    });
 
-    const user = await res.json()
+    const user = await res.json();
 
     if (!res.ok) {
-      throw new Error('Email ou senha inválidos')
+      throw new Error('Email ou senha inválidos');
     }
 
-    return user
+    return user;
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};
 
 const authOption: NextAuthOptions = {
   providers: [
@@ -49,18 +49,18 @@ const authOption: NextAuthOptions = {
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
-        const res = await login(credentials)
+        const res = await login(credentials);
 
         if (!res) {
-          throw new Error('Email ou senha inválidos')
+          throw new Error('Email ou senha inválidos');
         }
 
         if (!res.access_token) {
-          throw new Error('Erro interno, tente novamente mais tarde')
+          throw new Error('Erro interno, tente novamente mais tarde');
         }
 
         // Decodificando token para pegar id, email e role
-        const decoded = jwtDecode<JWT>(res.access_token)
+        const decoded = jwtDecode<JWT>(res.access_token);
 
         return {
           id: decoded.id, // Obrigatório para NextAuth
@@ -68,7 +68,7 @@ const authOption: NextAuthOptions = {
           role: decoded.role,
           accessToken: res.access_token,
           expiresAt: decoded.expiresAt * 1000,
-        }
+        };
       },
     }),
   ],
@@ -76,35 +76,35 @@ const authOption: NextAuthOptions = {
     // aqui eu to salvando os dados vindo do backend no token do nextAuth
     async jwt({ token, user }) {
       if (user) {
-        token.id = user.id
-        token.email = user.email
-        token.role = user.role
-        token.accessToken = user.accessToken
-        token.expiresAt = user.expiresAt
+        token.id = user.id;
+        token.email = user.email;
+        token.role = user.role;
+        token.accessToken = user.accessToken;
+        token.expiresAt = user.expiresAt;
       }
 
       if (token.expiresAt && Date.now() > token.expiresAt) {
-        throw new Error('Sessão expirada')
+        throw new Error('Sessão expirada');
       }
 
-      return token
+      return token;
     },
     async session({ session, token }) {
       if (session.user) {
-        session.user.id = token.id as string
-        session.user.email = token.email as string
-        session.user.role = token.role as AccessProfile
-        session.user.accessToken = token.accessToken as string
+        session.user.id = token.id as string;
+        session.user.email = token.email as string;
+        session.user.role = token.role as AccessProfile;
+        session.user.accessToken = token.accessToken as string;
       }
 
-      return session
+      return session;
     },
   },
   pages: {
     signIn: '/login',
   },
-}
+};
 
-const handler = NextAuth(authOption)
+const handler = NextAuth(authOption);
 
-export { handler as GET, handler as POST }
+export { handler as GET, handler as POST };
