@@ -8,7 +8,7 @@ import {
   resetPasswordDto,
 } from '@/utils/zod/forgetPassword';
 import { useRouter } from 'next/navigation';
-import { destroyCookie } from 'nookies';
+import { destroyCookie, parseCookies } from 'nookies';
 import { useContext } from 'react';
 import toast from 'react-hot-toast';
 
@@ -23,8 +23,9 @@ export const ClientPageNewPassword = () => {
   const { resetPassword } = useForgetPassword();
   const router = useRouter();
 
-  const userEmail = localStorage.getItem('userEmail');
-  const token = localStorage.getItem('userToken');
+  const cookies = parseCookies();
+  const userEmail = cookies['userEmail'];
+  const token = cookies['userToken'];
 
   const handleNewPassword = async (data: resetPasswordDto) => {
     try {
