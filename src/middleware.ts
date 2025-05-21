@@ -1,7 +1,6 @@
 import { withAuth } from 'next-auth/middleware';
 import { NextResponse } from 'next/server';
 import type { NextRequestWithAuth } from 'next-auth/middleware';
-import { AccessProfile } from './constants/enums/AccessProfile';
 
 export default withAuth(function middleware(req: NextRequestWithAuth) {
   // nextUrl nativo do next
@@ -12,7 +11,7 @@ export default withAuth(function middleware(req: NextRequestWithAuth) {
   const userRole = req.nextauth.token?.role;
   const token = req.nextauth.token;
 
-  const isAdmin = userRole === AccessProfile.ADMIN;
+  const isAdmin = userRole === 'ADMIN' || 'admin';
 
   // Se for rota de admin
   if (isAdminRoute) {
