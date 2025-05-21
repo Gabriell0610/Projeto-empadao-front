@@ -26,6 +26,6 @@ jobs:
 
       - name: Run install build and tests
         run: |
-          npm ci
+          npm install
           npm run lint
           npm run build
