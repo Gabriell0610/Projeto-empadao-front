@@ -3,7 +3,7 @@ import NextAuth from 'next-auth/next';
 import { JWT, NextAuthOptions } from 'next-auth';
 import CredentialProvider from 'next-auth/providers/credentials';
 import { jwtDecode } from 'jwt-decode';
-import { AccessProfile } from '@/constants/enums/AccessProfile';
+import { AccessProfile } from "@/constants/enums/AccessProfile"
 import { baseUrl } from '@/utils/helpers';
 
 // Estendendo o tipo JWT para incluir nossas propriedades personalizadas
