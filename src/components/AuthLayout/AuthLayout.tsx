@@ -24,7 +24,7 @@ export const AuthLayout = ({
       {/* Seção do formulário */}
       <section className="flex flex-1 flex-col items-center justify-center overflow-y-auto lg:w-1/2">
         <div className="mx-auto w-full max-w-[600px] px-8 py-2 md:max-w-[500px]">
-          <h1 className="mt-11 text-start text-lg font-semibold text-text-primary">
+          <h1 className="mt-11 text-start text-xl font-semibold text-text-primary">
             {title}
           </h1>
           {children}

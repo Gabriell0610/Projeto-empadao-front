@@ -6,6 +6,7 @@ export default function LoginPage() {
     <AuthLayout
       altImage="Uma pessoa esperando ser logada"
       imageUrl={imageLogin}
+      mode="register"
       title={'Acesse sua conta e faça seus pedidos!'}
     >
       <ClientPageLogin />
