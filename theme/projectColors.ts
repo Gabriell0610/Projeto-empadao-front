@@ -3,6 +3,7 @@ export const projectColors = {
     greenLight: '#247301',
     greenDark: '#074004',
     greenFluorescent: '#c6ff00',
+    greenHover: '#91d81f',
   },
 
   neutral: {

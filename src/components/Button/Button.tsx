@@ -37,8 +37,9 @@ export const ButtonDefault = ({
         href={href || ''}
         className={twMerge(
           isLoading
-            ? 'pointer-events-none cursor-not-allowed pb-3 text-primary-greenLight opacity-50'
-            : 'pb-3 text-primary-greenLight',
+            ? 'pointer-events-none cursor-not-allowed text-primary-greenLight opacity-50'
+            : 'text-primary-greenLight',
+          className,
         )}
       >
         {children}
@@ -54,8 +55,9 @@ export const ButtonDefault = ({
       onClick={disabled ? undefined : onClick}
       className={twMerge(
         isPrimary
-          ? 'mt-5 bg-primary-greenLight px-4 py-2 text-center text-neutral-white'
-          : '',
+          ? 'bg-primary-greenLight px-4 py-2 text-center text-neutral-white'
+          : 'bg-neutral-offWhite px-4 py-2 text-center text-text-primary',
+        className,
       )}
     >
       {isLoading ? (

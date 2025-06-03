@@ -50,7 +50,12 @@ export function DefaultForm<T extends ZodSchema<any>>({
           disabled={isLoading || disabled}
         />
       ))}
-      <ButtonDefault type="submit" variant="primary" isLoading={isLoading}>
+      <ButtonDefault
+        type="submit"
+        variant="primary"
+        isLoading={isLoading}
+        className="mt-5"
+      >
         {childrenButton}
       </ButtonDefault>
     </form>
