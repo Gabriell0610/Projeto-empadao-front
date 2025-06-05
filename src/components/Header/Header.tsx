@@ -11,27 +11,22 @@ interface HeaderProps {
 export function Header(props: HeaderProps) {
   const { login } = props;
   return (
-    <header className="py-4">
+    <header className="px-8 py-4">
       <nav className="flex items-center justify-between">
         <div className="flex items-center gap-4">
           <Link href={'/'}>
             <Image alt="logo da marca" src={logo} quality={100} />
           </Link>
-          <div className="flex gap-4">
-            <ButtonDefault variant="link" className="pb-0 text-text-primary">
-              Contato
-            </ButtonDefault>
-            <ButtonDefault variant="link" className="pb-0 text-text-primary">
-              Menu
-            </ButtonDefault>
-          </div>
         </div>
         {!login && (
           <div className="flex gap-2">
-            <ButtonDefault variant="secondary" className="mt-0">
+            <ButtonDefault variant="buttonLink" href="/login">
               Login
             </ButtonDefault>
-            <ButtonDefault variant="primary" className="mt-0 rounded-md">
+            <ButtonDefault
+              variant="buttonLink"
+              className="bg-primary-greenLight text-neutral-white"
+            >
               Cadastro
             </ButtonDefault>
           </div>

@@ -6,7 +6,7 @@ import { twMerge } from 'tailwind-merge';
 import { LoadingComponent } from '../Loading/LoadingComponent';
 
 type ButtonProps = ComponentProps<'button'>;
-type VariantButton = 'primary' | 'secondary' | 'link';
+type VariantButton = 'primary' | 'buttonLink' | 'link';
 
 interface ButtonInterface extends ButtonProps {
   variant?: VariantButton;
@@ -29,7 +29,7 @@ export const ButtonDefault = ({
 }: ButtonInterface) => {
   const isLink = variant === 'link';
   const isPrimary = variant === 'primary';
-  const isSecondary = variant === 'secondary';
+  const isButtonLink = variant === 'buttonLink';
 
   if (isLink) {
     return (
@@ -41,6 +41,20 @@ export const ButtonDefault = ({
             : 'text-primary-greenLight',
           className,
         )}
+      >
+        {children}
+      </Link>
+    );
+  }
+
+  if (isButtonLink) {
+    return (
+      <Link
+        className={twMerge(
+          'rounded-md border border-primary-greenLight bg-neutral-white px-6 py-2 font-semibold text-text-primary',
+          className,
+        )}
+        href={href || ''}
       >
         {children}
       </Link>

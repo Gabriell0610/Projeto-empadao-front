@@ -3,12 +3,13 @@
 import { Header } from '@/components/Header/Header';
 import Image from 'next/image';
 import ImageChef from '../../public/image_chef.png';
+import { Footer } from '@/components/Footer/Footer';
 /* eslint-disable prettier/prettier */
 export default function Home() {
   return (
-    <main className="mx-auto w-full px-8">
+    <main className="mx-auto w-full">
       <Header />
-      <section className="w-full px-2 py-10">
+      <section className="w-full px-8 py-10">
         <article className="flex flex-col items-center gap-6 md:flex-row md:gap-8">
           <div className="flex flex-col gap-4">
             <h2 className="text-2xl font-bold">
@@ -31,6 +32,7 @@ export default function Home() {
           </div>
         </article>
       </section>
+      <Footer />
     </main>
   );
 }
