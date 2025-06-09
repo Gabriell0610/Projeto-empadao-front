@@ -1,4 +1,4 @@
-Projeto Encomenda/Pedido - Frontend
+Projeto Encomenda/Pedido 
 Este é o frontend do projeto de encomendas e agendamentos de pedidos de comida. A aplicação permite que clientes se cadastrem, façam login e realizem pedidos, enquanto o administrador pode gerenciar os pedidos recebidos por meio de uma interface dedicada.
 
 🔧 Tecnologias utilizadas
