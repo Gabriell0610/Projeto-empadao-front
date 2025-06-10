@@ -1,52 +1,52 @@
-import Link from 'next/link';
 import { FaInstagram } from 'react-icons/fa6';
 import { FaWhatsapp } from 'react-icons/fa';
 import { FaFacebookSquare } from 'react-icons/fa';
+import { TitleH2 } from '../Titles/Titles';
+import { CustomLink } from '../LinkComponent/Link';
 
 const Footer = () => {
   return (
     <footer className="bg-primary-greenFooter px-6 text-text-primary">
       <div className="container mx-auto flex flex-wrap justify-between gap-6 px-4 py-6">
-        <div className="mb-6 flex min-w-[220px] flex-col items-start">
-          <h3 className="mb-2 text-lg font-semibold">
-            Horário de Funcionamento
-          </h3>
-          <p className="text-sm">
-            Para entrega no mesmo dia, pedido até as 12h
-          </p>
-          <p className="text-sm">Para agendamento qualquer horário</p>
+        <div className="my-3 mb-6 flex min-w-[220px] flex-col items-start">
+          <TitleH2>Conheça nosso site</TitleH2>
+          <CustomLink type="footer" href="/login">
+            Login
+          </CustomLink>
+          <CustomLink type="footer" href="/register">
+            Cadastro
+          </CustomLink>
+          <CustomLink type="footer" href="/login">
+            Menu
+          </CustomLink>
         </div>
 
-        <div className="mb-6 flex min-w-[220px] flex-col items-start">
-          <h3 className="mb-2 text-lg font-semibold">Suporte</h3>
-          <p className="text-sm">Entre em contato com a gente</p>
-          <p className="text-sm">pelo número: (21)99999-0909</p>
+        <div className="my-3 mb-6 flex min-w-[220px] flex-col items-start">
+          <TitleH2>Suporte</TitleH2>
+          <CustomLink type="footer" href="#duvidas">
+            Dúvidas
+          </CustomLink>
+          <p>Entre em contato: (21)99999-9999</p>
         </div>
 
-        <div className="mb-6 flex min-w-[220px] flex-col items-start">
-          <h3 className="mb-2 text-lg font-semibold">Redes Sociais</h3>
+        <div className="my-3 mb-6 flex min-w-[220px] flex-col items-start">
+          <TitleH2>Redes Sociais</TitleH2>
           <div className="flex gap-3">
-            <Link
-              href={''}
-              className="flex items-center justify-center rounded-full bg-white p-2"
-              target="_blank"
+            <CustomLink
+              href={'https://www.instagram.com/chefalineval/'}
+              type="social"
             >
               <FaInstagram size={20} />
-            </Link>
-            <Link
-              href={''}
-              className="flex items-center justify-center rounded-full bg-white p-2"
-              target="_blank"
-            >
+            </CustomLink>
+            <CustomLink href={''} type="social">
               <FaWhatsapp size={20} />
-            </Link>
-            <Link
-              href={''}
-              className="flex items-center justify-center rounded-full bg-white p-2"
-              target="_blank"
+            </CustomLink>
+            <CustomLink
+              href={'https://www.facebook.com/empadaodaline'}
+              type="social"
             >
               <FaFacebookSquare size={20} />
-            </Link>
+            </CustomLink>
           </div>
         </div>
       </div>

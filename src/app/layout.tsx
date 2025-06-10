@@ -1,9 +1,10 @@
 import '../../theme/globals.css';
 import type { Metadata } from 'next';
-import { SomeChildrenInterface } from '@/utils/types/layout.type';
+import { SomeChildrenInterface } from '@/utils/types/generics/layout.type';
 import { SessionProvider } from '@/providers/sessionProvider';
 import { LoadingProvider } from '@/providers/loadingProvider/loadingProvider';
 import { Toaster } from 'react-hot-toast';
+import { Provider } from '@/components/ui/provider';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -16,7 +17,9 @@ export default function RootLayout({ children }: SomeChildrenInterface) {
       <body suppressHydrationWarning={true} className={`antialiased`}>
         {/* Aqui vai ter o header global para a landing pagee client  */}
         <SessionProvider>
-          <LoadingProvider>{children}</LoadingProvider>
+          <LoadingProvider>
+            <Provider>{children}</Provider>
+          </LoadingProvider>
         </SessionProvider>
         <Toaster position="top-right" reverseOrder={false} />
       </body>

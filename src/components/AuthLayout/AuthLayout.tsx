@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 'use client';
-import { SomeChildrenInterface } from '@/utils/types/layout.type';
+import { SomeChildrenInterface } from '@/utils/types/generics/layout.type';
 import Image, { StaticImageData } from 'next/image';
 import { twMerge } from 'tailwind-merge';
 

@@ -1,5 +1,5 @@
 'use client';
-import { SomeChildrenInterface } from '@/utils/types/layout.type';
+import { SomeChildrenInterface } from '@/utils/types/generics/layout.type';
 import { LoadingProviderInterface } from '@/utils/types/providers/loadingProvider.type';
 import { createContext, useState } from 'react';
 

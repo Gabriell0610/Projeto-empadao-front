@@ -3,7 +3,7 @@ export const projectColors = {
     greenLight: '#247301',
     greenDark: '#074004',
     greenFluorescent: '#c6ff00',
-    greenFooter: '#91d81f',
+    greenFooter: '#BEF164',
   },
 
   neutral: {
@@ -16,13 +16,11 @@ export const projectColors = {
     primary: '#222',
     secondary: '#666',
     placeholder: '#989898',
+    green: '#16A34A',
   },
 
-  accent: {
-    bluePetroil: '#004D40', // Novo tom para dar contraste
-  },
-
-  errors: {
-    textError: '#DC2626',
+  details: {
+    greenHover: '#166534',
+    error: '#DC2626',
   },
 };

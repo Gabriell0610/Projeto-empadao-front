@@ -1,4 +1,4 @@
-import { SomeChildrenInterface } from '@/utils/types/layout.type';
+import { SomeChildrenInterface } from '@/utils/types/generics/layout.type';
 
 export default function ClientLayout({ children }: SomeChildrenInterface) {
   return (

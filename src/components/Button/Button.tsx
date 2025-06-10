@@ -6,7 +6,7 @@ import { twMerge } from 'tailwind-merge';
 import { LoadingComponent } from '../Loading/LoadingComponent';
 
 type ButtonProps = ComponentProps<'button'>;
-type VariantButton = 'primary' | 'buttonLink' | 'link';
+type VariantButton = 'primary' | 'third' | 'link' | 'secondary';
 
 interface ButtonInterface extends ButtonProps {
   variant?: VariantButton;
@@ -29,7 +29,8 @@ export const ButtonDefault = ({
 }: ButtonInterface) => {
   const isLink = variant === 'link';
   const isPrimary = variant === 'primary';
-  const isButtonLink = variant === 'buttonLink';
+  const isSecondary = variant === 'secondary';
+  const isThird = variant === 'third';
 
   if (isLink) {
     return (
@@ -46,21 +47,6 @@ export const ButtonDefault = ({
       </Link>
     );
   }
-
-  if (isButtonLink) {
-    return (
-      <Link
-        className={twMerge(
-          'rounded-md border border-primary-greenLight bg-neutral-white px-6 py-2 font-semibold text-text-primary',
-          className,
-        )}
-        href={href || ''}
-      >
-        {children}
-      </Link>
-    );
-  }
-
   return (
     <button
       {...rest}
@@ -69,8 +55,12 @@ export const ButtonDefault = ({
       onClick={disabled ? undefined : onClick}
       className={twMerge(
         isPrimary
-          ? 'bg-primary-greenLight px-4 py-2 text-center text-neutral-white'
-          : 'bg-neutral-offWhite px-4 py-2 text-center text-text-primary',
+          ? 'rounded-md border bg-primary-greenLight px-4 py-2 text-center font-semibold text-neutral-white hover:bg-details-greenHover'
+          : isSecondary
+            ? 'rounded-md border border-primary-greenLight bg-neutral-white px-4 py-2 font-semibold text-text-primary hover:opacity-80'
+            : isThird
+              ? 'w-full rounded border border-green-700 py-2 font-medium text-green-700 transition-colors duration-200 hover:bg-green-700 hover:text-white'
+              : '',
         className,
       )}
     >
