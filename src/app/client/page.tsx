@@ -1,8 +1,8 @@
 import { Header } from '@/components/Header/Header';
 import ClientPage from './clientPage';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '../api/auth/[...nextauth]/route';
 import { Footer } from '@/components/Footer/Footer';
+import { authOptions } from '@/libs/auth';
 
 export default async function ClientDefaultPage() {
   const session = await getServerSession(authOptions);
