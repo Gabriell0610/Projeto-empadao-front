@@ -40,7 +40,7 @@ const login = async (credentials: any) => {
   }
 };
 
-const authOption: NextAuthOptions = {
+export const authOptions: NextAuthOptions = {
   providers: [
     CredentialProvider({
       name: 'Credentials',
@@ -105,6 +105,6 @@ const authOption: NextAuthOptions = {
   },
 };
 
-const handler = NextAuth(authOption);
+const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };

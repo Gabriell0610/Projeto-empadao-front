@@ -23,7 +23,7 @@ const Footer = () => {
 
         <div className="my-3 mb-6 flex min-w-[220px] flex-col items-start">
           <TitleH2>Suporte</TitleH2>
-          <CustomLink type="footer" href="#duvidas">
+          <CustomLink type="footer" href="/duvidas">
             Dúvidas
           </CustomLink>
           <p>Entre em contato: (21)99999-9999</p>

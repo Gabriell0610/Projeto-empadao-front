@@ -39,7 +39,7 @@ export const ButtonDefault = ({
         className={twMerge(
           isLoading
             ? 'pointer-events-none cursor-not-allowed text-primary-greenLight opacity-50'
-            : 'text-primary-greenLight',
+            : 'text-primary-greenLight hover:underline',
           className,
         )}
       >

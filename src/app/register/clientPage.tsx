@@ -23,7 +23,7 @@ export const ClientPageRegister = () => {
         toast.error(getSafeErrorMessage(res.message));
         setIsLoading(false);
       } else {
-        toast.success(getSafeErrorMessage(res.message));
+        toast.success(getSafeErrorMessage('Redirecionando...'));
         setIsLoading(false);
         route.push('/login');
       }
@@ -41,7 +41,7 @@ export const ClientPageRegister = () => {
         isLoading={isLoading}
         fields={[
           {
-            name: 'nome',
+            name: 'name',
             label: 'Nome Completo',
             placeholder: 'Digite seu nome completo',
           },
@@ -52,13 +52,13 @@ export const ClientPageRegister = () => {
             placeholder: 'Digite seu email',
           },
           {
-            name: 'senha',
+            name: 'password',
             label: 'Senha',
             type: 'password',
             placeholder: 'Digite sua senha',
           },
           {
-            name: 'telefone',
+            name: 'cellphone',
             label: 'Telefone',
             type: 'number',
             placeholder: 'Digite seu telefone',

@@ -9,7 +9,7 @@ export const TitleH1 = ({ children, className }: TitlesInterface) => {
   return (
     <h1
       className={twMerge(
-        'mb-5 text-xl font-semibold text-text-primary sm:text-3xl lg:text-4xl',
+        'mb-5 text-2xl font-semibold text-text-primary sm:text-3xl lg:text-4xl',
         className,
       )}
     >
@@ -22,7 +22,7 @@ export const TitleH2 = ({ children, className }: TitlesInterface) => {
   return (
     <h2
       className={twMerge(
-        'mb-2 text-lg font-semibold text-text-primary',
+        'mb-2 text-xl font-semibold text-text-primary',
         className,
       )}
     >
@@ -33,7 +33,25 @@ export const TitleH2 = ({ children, className }: TitlesInterface) => {
 
 export const TitleH3 = ({ children, className }: TitlesInterface) => {
   return (
-    <h3 className={twMerge('mb-2 font-semibold text-text-primary', className)}>
+    <h3
+      className={twMerge(
+        'mb-2 text-lg font-semibold text-text-primary lg:text-lg',
+        className,
+      )}
+    >
+      {children}
+    </h3>
+  );
+};
+
+export const TitleH4 = ({ children, className }: TitlesInterface) => {
+  return (
+    <h3
+      className={twMerge(
+        'mb-2 text-base font-semibold text-text-primary',
+        className,
+      )}
+    >
       {children}
     </h3>
   );

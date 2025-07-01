@@ -5,6 +5,7 @@ import { SessionProvider } from '@/providers/sessionProvider';
 import { LoadingProvider } from '@/providers/loadingProvider/loadingProvider';
 import { Toaster } from 'react-hot-toast';
 import { Provider } from '@/components/ui/provider';
+import { CartProvider } from '@/providers/cartContext/cartProvider';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -18,7 +19,9 @@ export default function RootLayout({ children }: SomeChildrenInterface) {
         {/* Aqui vai ter o header global para a landing pagee client  */}
         <SessionProvider>
           <LoadingProvider>
-            <Provider>{children}</Provider>
+            <CartProvider>
+              <Provider>{children}</Provider>
+            </CartProvider>
           </LoadingProvider>
         </SessionProvider>
         <Toaster position="top-right" reverseOrder={false} />

@@ -5,14 +5,28 @@ import { ButtonDefault } from '../Button/Button';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { Session } from 'next-auth';
+import { Cart } from '../Cart/Cart';
+import { useEffect, useState } from 'react';
+import { useCart } from '@/providers/cartContext/cartProvider';
+import { FaRegCircleUser } from 'react-icons/fa6';
+import { FaBagShopping } from 'react-icons/fa6';
 
 interface HeaderProps {
-  login?: boolean;
+  login?: Session | null;
 }
 
 export function Header(props: HeaderProps) {
   const navigate = useRouter();
   const { login } = props;
+  const [openCart, setOpenCart] = useState(false);
+  const [hasMounted, setHasMounted] = useState(false);
+  const { items, quantity } = useCart();
+
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
+
   return (
     <header className="px-8 py-4">
       <nav className="mx-auto flex w-full max-w-screen-xl items-center justify-between px-4 py-2">
@@ -28,23 +42,45 @@ export function Header(props: HeaderProps) {
         </div>
 
         {/* BOTÕES LOGIN / CADASTRO */}
-        {!login && (
-          <div className="flex shrink-0 items-center gap-2">
+        <div className="flex items-center gap-2">
+          {hasMounted && items.length > 0 && (
             <ButtonDefault
-              variant="secondary"
-              onClick={() => navigate.push('/login')}
+              className="relative"
+              onClick={() => setOpenCart(true)}
             >
-              Login
+              <FaBagShopping size={25} />
+              <span className="absolute right-0 top-0 flex h-4 w-4 items-center justify-center rounded-full bg-red-600 text-xs text-white">
+                {quantity}
+              </span>
             </ButtonDefault>
-            <ButtonDefault
-              variant="primary"
-              onClick={() => navigate.push('/register')}
-            >
-              Cadastro
-            </ButtonDefault>
-          </div>
-        )}
+          )}
+          {!login?.user.id ? (
+            <div className="flex gap-2">
+              <ButtonDefault
+                variant="secondary"
+                onClick={() => navigate.push('/login')}
+              >
+                Login
+              </ButtonDefault>
+              <ButtonDefault
+                variant="primary"
+                onClick={() => navigate.push('/register')}
+              >
+                Cadastro
+              </ButtonDefault>
+            </div>
+          ) : (
+            <div className="flex gap-6">
+              <ButtonDefault variant="link" className="text-text-primary">
+                <FaRegCircleUser size={25} />
+              </ButtonDefault>
+              <ButtonDefault variant="link">Menu</ButtonDefault>
+              <ButtonDefault variant="link">Meus Pedidos</ButtonDefault>
+            </div>
+          )}
+        </div>
       </nav>
+      <Cart openCart={openCart} setOpenCart={setOpenCart} />
     </header>
   );
 }
