@@ -11,6 +11,7 @@ import {
 import { useItems } from '@/hooks/useItems';
 import { useSession } from 'next-auth/react';
 import { LoadingContext } from '@/providers/loadingProvider/loadingProvider';
+import { useCartHook } from '@/hooks/useCart';
 
 interface CartItem {
   item: ListActiveItemsByIdInterface;
@@ -36,6 +37,7 @@ export const CartContext = createContext<CartContextType | undefined>(
 export const CartProvider = ({ children }: SomeChildrenInterface) => {
   const { data: session } = useSession();
   const { listItemById } = useItems();
+  const { createUserCart } = useCartHook();
   const { isLoading, setIsLoading } = useContext(LoadingContext);
   const [quantity, setQuantity] = useState(0);
   const [items, setItems] = useState<CartItem[]>([]);
@@ -83,6 +85,15 @@ export const CartProvider = ({ children }: SomeChildrenInterface) => {
           ]);
         }
 
+        setIsLoading(false);
+      } else {
+        setIsLoading(true);
+        const res = await createUserCart({
+          token: session.user.accessToken,
+          body: { itemId: itemId, userId: session.user.id },
+        });
+
+        console.log('RES CREATE CART', res);
         setIsLoading(false);
       }
     },
