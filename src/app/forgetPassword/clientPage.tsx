@@ -1,64 +1,77 @@
-'use client'
-import { DefaultForm } from '@/components/DefaultForm/DefaultForm'
-import { useForgetPassword } from '@/hooks/useForgetPassword'
-import { LoadingContext } from '@/providers/loadingProvider/loadingProvider'
+'use client';
+import { DefaultForm } from '@/components/DefaultForm/DefaultForm';
+import { useForgetPassword } from '@/hooks/useForgetPassword';
+import { LoadingContext } from '@/providers/loadingProvider/loadingProvider';
 import {
   sendEmailDto,
   sendEmailSchema,
   validateTokenDto,
   validateTokenSchema,
-} from '@/utils/zod/forgetPassword'
-import { useRouter } from 'next/navigation'
-import { useContext, useState } from 'react'
-import toast from 'react-hot-toast'
+} from '@/utils/zod/forgetPassword';
+import { useRouter } from 'next/navigation';
+import { useContext, useState } from 'react';
+import toast from 'react-hot-toast';
+import { setCookie } from 'nookies';
+import { getSafeErrorMessage } from '@/utils/helpers';
 
 export const ClientPageForgetPassword = () => {
-  const [tokenNotGenerated, setTokenNotGenerated] = useState(true)
-  const { isLoading, setIsLoading } = useContext(LoadingContext)
-  const { generateToken, validateToken } = useForgetPassword()
-  const router = useRouter()
+  const [tokenNotGenerated, setTokenNotGenerated] = useState(true);
+  const { isLoading, setIsLoading } = useContext(LoadingContext);
+  const { generateToken, validateToken } = useForgetPassword();
+  const router = useRouter();
+
+  function saveDataInCookies(data: validateTokenDto) {
+    setCookie(null, 'userEmail', data.email, {
+      path: '/', // necessário para estar acessível em qualquer rota
+      maxAge: 60 * 10, // opcional: tempo de expiração em segundos (ex: 10 minutos)
+    });
+
+    setCookie(null, 'userToken', data.token, {
+      path: '/',
+      maxAge: 60 * 10,
+    });
+  }
 
   const handleGenerateToken = async (data: sendEmailDto) => {
     try {
-      setIsLoading(true)
-      const res = await generateToken(data)
+      setIsLoading(true);
+      const res = await generateToken(data);
 
       if (!res.success) {
-        setIsLoading(false)
-        toast.error(res.message)
+        setIsLoading(false);
+        toast.error(getSafeErrorMessage(res.message));
       } else {
-        setTokenNotGenerated(false)
-        toast.success(res.message)
-        setIsLoading(false)
+        setTokenNotGenerated(false);
+        toast.success(getSafeErrorMessage(res.message));
+        setIsLoading(false);
       }
     } catch (error) {
-      console.log(error)
-      setIsLoading(false)
+      console.log(error);
+      setIsLoading(false);
     }
-  }
+  };
 
   const handleValidateToken = async (data: validateTokenDto) => {
     try {
-      setIsLoading(true)
-      console.log(data.email)
-      const res = await validateToken(data)
+      setIsLoading(true);
+      console.log(data.email);
+      const res = await validateToken(data);
 
       if (!res.success) {
-        setTokenNotGenerated(true)
-        toast.error(res.message)
-        setIsLoading(false)
+        setTokenNotGenerated(true);
+        toast.error(res.message);
+        setIsLoading(false);
       } else {
-        toast.success('Aguarde ser redirecionado!')
-        router.push('/newPassword')
-        localStorage.setItem('userEmail', data.email)
-        localStorage.setItem('userToken', data.token)
-        setIsLoading(false)
+        toast.success('Aguarde ser redirecionado!');
+        saveDataInCookies(data);
+        router.push('/newPassword');
+        setIsLoading(false);
       }
     } catch (error) {
-      console.log(error)
-      setIsLoading(false)
+      console.log(error);
+      setIsLoading(false);
     }
-  }
+  };
 
   return (
     <>
@@ -103,5 +116,5 @@ export const ClientPageForgetPassword = () => {
         </div>
       )}
     </>
-  )
-}
+  );
+};

@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { twMerge } from 'tailwind-merge'
-import { AiOutlineLoading3Quarters } from 'react-icons/ai'
-import { LoadingComponentInterface } from '@/utils/types/components/loadingComponent'
-import colors from 'tailwindcss/colors'
+import { twMerge } from 'tailwind-merge';
+import { AiOutlineLoading3Quarters } from 'react-icons/ai';
+import { LoadingComponentInterface } from '@/utils/types/components/loadingComponent';
+import colors from 'tailwindcss/colors';
 
 export const LoadingComponent = ({
   size = 60,
@@ -22,5 +22,5 @@ export const LoadingComponent = ({
         color={mode === 'fullScreen' ? colors.green[500] : colors.white[600]}
       />
     </div>
-  )
-}
+  );
+};

@@ -1,54 +1,59 @@
-'use client'
-import { DefaultForm } from '@/components/DefaultForm/DefaultForm'
-import { useForgetPassword } from '@/hooks/useForgetPassword'
-import { LoadingContext } from '@/providers/loadingProvider/loadingProvider'
+'use client';
+import { DefaultForm } from '@/components/DefaultForm/DefaultForm';
+import { useForgetPassword } from '@/hooks/useForgetPassword';
+import { LoadingContext } from '@/providers/loadingProvider/loadingProvider';
+import { getSafeErrorMessage } from '@/utils/helpers';
 import {
   resetPasswordSchema,
   resetPasswordDto,
-} from '@/utils/zod/forgetPassword'
-import { useRouter } from 'next/navigation'
-import { useContext } from 'react'
-import toast from 'react-hot-toast'
+} from '@/utils/zod/forgetPassword';
+import { useRouter } from 'next/navigation';
+import { destroyCookie, parseCookies } from 'nookies';
+import { useContext } from 'react';
+import toast from 'react-hot-toast';
 
 export interface NewPasswordData {
-  newPassword: string
-  email: string
-  token: string
+  newPassword: string;
+  email: string;
+  token: string;
 }
 
 export const ClientPageNewPassword = () => {
-  const { isLoading, setIsLoading } = useContext(LoadingContext)
-  const { resetPassword } = useForgetPassword()
-  const router = useRouter()
+  const { isLoading, setIsLoading } = useContext(LoadingContext);
+  const { resetPassword } = useForgetPassword();
+  const router = useRouter();
 
-  const userEmail = localStorage.getItem('userEmail')
-  const token = localStorage.getItem('userToken')
+  const cookies = parseCookies();
+  const userEmail = cookies['userEmail'];
+  const token = cookies['userToken'];
 
   const handleNewPassword = async (data: resetPasswordDto) => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
 
       const dataToSend: NewPasswordData = {
         email: userEmail as string,
         newPassword: data.newPassword,
         token: token as string,
-      }
+      };
 
-      const res = await resetPassword(dataToSend)
+      const res = await resetPassword(dataToSend);
 
       if (!res.success) {
-        toast.error(res.message)
-        setIsLoading(false)
+        toast.error(getSafeErrorMessage(res.message));
+        setIsLoading(false);
       } else {
-        toast.success('Senha alterada com sucesso!')
-        setIsLoading(false)
-        router.push('/login')
+        toast.success(getSafeErrorMessage(res.message));
+        setIsLoading(false);
+        router.push('/login');
+        destroyCookie(null, 'userEmail');
+        destroyCookie(null, 'userToken');
       }
     } catch (error) {
-      console.log(error)
-      setIsLoading(false)
+      console.log(error);
+      setIsLoading(false);
     }
-  }
+  };
 
   return (
     <div>
@@ -73,5 +78,5 @@ export const ClientPageNewPassword = () => {
         childrenButton={'Salvar'}
       />
     </div>
-  )
-}
+  );
+};

@@ -1,18 +1,18 @@
-import { z } from 'zod'
-import { passwordValidation } from './validations/password'
+import { z } from 'zod';
+import { passwordValidation } from './validations/password';
 
 const defaultSchema = z.object({
   email: z.string().min(1, 'Campo obrigatório').email('Email inválido'),
-})
+});
 
-const sendEmailSchema = defaultSchema.extend({})
+const sendEmailSchema = defaultSchema.extend({});
 
 const validateTokenSchema = defaultSchema.extend({
   token: z
     .string()
     .min(1, 'Campo obrigatório')
     .max(6, 'O token só pode ter 6 dígitos'),
-})
+});
 
 const resetPasswordSchema = z
   .object({
@@ -22,10 +22,10 @@ const resetPasswordSchema = z
   .refine((data) => data.newPassword === data.samePassword, {
     message: 'As senhas devem ser iguais',
     path: ['samePassword'],
-  })
+  });
 
-export type sendEmailDto = z.infer<typeof sendEmailSchema>
-export type resetPasswordDto = z.infer<typeof resetPasswordSchema>
-export type validateTokenDto = z.infer<typeof validateTokenSchema>
+export type sendEmailDto = z.infer<typeof sendEmailSchema>;
+export type resetPasswordDto = z.infer<typeof resetPasswordSchema>;
+export type validateTokenDto = z.infer<typeof validateTokenSchema>;
 
-export { sendEmailSchema, resetPasswordSchema, validateTokenSchema }
+export { sendEmailSchema, resetPasswordSchema, validateTokenSchema };

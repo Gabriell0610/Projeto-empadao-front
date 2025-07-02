@@ -1,5 +1,5 @@
-import AdminClientPage from './clientPage'
+import AdminClientPage from './clientPage';
 
 export default function AdminPage() {
-  return <AdminClientPage />
+  return <AdminClientPage />;
 }

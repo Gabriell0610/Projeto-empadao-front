@@ -1,18 +1,18 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import Link from 'next/link'
-import { ComponentProps } from 'react'
-import { IconType } from 'react-icons'
-import { twMerge } from 'tailwind-merge'
-import { LoadingComponent } from '../Loading/LoadingComponent'
+import Link from 'next/link';
+import { ComponentProps } from 'react';
+import { IconType } from 'react-icons';
+import { twMerge } from 'tailwind-merge';
+import { LoadingComponent } from '../Loading/LoadingComponent';
 
-type ButtonProps = ComponentProps<'button'>
-type VariantButton = 'primary' | 'secondary' | 'link'
+type ButtonProps = ComponentProps<'button'>;
+type VariantButton = 'primary' | 'third' | 'link' | 'secondary';
 
 interface ButtonInterface extends ButtonProps {
-  variant?: VariantButton
-  icon?: IconType
-  href?: string
-  isLoading?: boolean
+  variant?: VariantButton;
+  icon?: IconType;
+  href?: string;
+  isLoading?: boolean;
 }
 
 export const ButtonDefault = ({
@@ -27,9 +27,10 @@ export const ButtonDefault = ({
   className,
   ...rest
 }: ButtonInterface) => {
-  const isLink = variant === 'link'
-  const isPrimary = variant === 'primary'
-  const isSecondary = variant === 'secondary'
+  const isLink = variant === 'link';
+  const isPrimary = variant === 'primary';
+  const isSecondary = variant === 'secondary';
+  const isThird = variant === 'third';
 
   if (isLink) {
     return (
@@ -37,15 +38,15 @@ export const ButtonDefault = ({
         href={href || ''}
         className={twMerge(
           isLoading
-            ? 'pointer-events-none cursor-not-allowed pb-3 text-primary-greenLight opacity-50'
-            : 'pb-3 text-primary-greenLight',
+            ? 'pointer-events-none cursor-not-allowed text-primary-greenLight opacity-50'
+            : 'text-primary-greenLight hover:underline',
+          className,
         )}
       >
         {children}
       </Link>
-    )
+    );
   }
-
   return (
     <button
       {...rest}
@@ -54,8 +55,13 @@ export const ButtonDefault = ({
       onClick={disabled ? undefined : onClick}
       className={twMerge(
         isPrimary
-          ? 'mt-5 bg-primary-greenLight px-4 py-2 text-center text-neutral-white'
-          : '',
+          ? 'rounded-md border bg-primary-greenLight px-4 py-2 text-center font-semibold text-neutral-white hover:bg-details-greenHover'
+          : isSecondary
+            ? 'rounded-md border border-primary-greenLight bg-neutral-white px-4 py-2 font-semibold text-text-primary hover:opacity-80'
+            : isThird
+              ? 'w-full rounded border border-green-700 py-2 font-medium text-green-700 transition-colors duration-200 hover:bg-green-700 hover:text-white'
+              : '',
+        className,
       )}
     >
       {isLoading ? (
@@ -67,5 +73,5 @@ export const ButtonDefault = ({
         children
       )}
     </button>
-  )
-}
+  );
+};

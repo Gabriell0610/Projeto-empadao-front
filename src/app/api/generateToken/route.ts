@@ -1,20 +1,20 @@
-import { baseUrl } from '@/utils/helpers'
-import { NextResponse } from 'next/server'
+import { baseUrl } from '@/utils/helpers';
+import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
-  const data = await request.json()
+  const data = await request.json();
 
   const req = await fetch(`${baseUrl()}/auth/forgot-password`, {
     method: 'POST',
     body: JSON.stringify(data),
     headers: { 'Content-Type': 'application/json' },
-  })
+  });
 
-  const res = await req.json()
+  const res = await req.json();
 
   if (req.status >= 400) {
-    return NextResponse.json({ ...res, success: false })
+    return NextResponse.json({ ...res, success: false });
   }
 
-  return NextResponse.json({ ...res, success: true })
+  return NextResponse.json({ ...res, success: true });
 }
