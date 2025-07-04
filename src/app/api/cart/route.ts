@@ -23,3 +23,23 @@ export async function POST(request: Request) {
 
   return NextResponse.json({ ...res, success: true });
 }
+
+export async function GET() {
+  const token = headers().get('authorization');
+
+  const req = await fetch(`${baseUrl()}/cart`, {
+    method: 'GET',
+    headers: {
+      authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+  });
+
+  const res = await req.json();
+
+  if (req.status >= 400) {
+    return NextResponse.json({ ...res, success: false });
+  }
+
+  return NextResponse.json({ ...res, success: true });
+}

@@ -16,7 +16,6 @@ export default function RootLayout({ children }: SomeChildrenInterface) {
   return (
     <html lang="en">
       <body suppressHydrationWarning={true} className={`antialiased`}>
-        {/* Aqui vai ter o header global para a landing pagee client  */}
         <SessionProvider>
           <LoadingProvider>
             <CartProvider>

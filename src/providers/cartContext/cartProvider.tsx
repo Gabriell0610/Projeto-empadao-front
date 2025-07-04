@@ -12,14 +12,22 @@ import { useItems } from '@/hooks/useItems';
 import { useSession } from 'next-auth/react';
 import { LoadingContext } from '@/providers/loadingProvider/loadingProvider';
 import { useCartHook } from '@/hooks/useCart';
+import toast from 'react-hot-toast';
+import { ItemCarrinho } from '@/utils/types/cart.type';
 
-interface CartItem {
+interface CartItemLocal {
   item: ListActiveItemsByIdInterface;
   quantity: number;
 }
 
+interface CartApiResponse {
+  valorTotal: string;
+  carrinhoItens: ItemCarrinho[];
+}
+
 interface CartContextType {
-  items: CartItem[];
+  itemsLocal: CartItemLocal[];
+  itemsCartApi: CartApiResponse | null;
   addItemById: (itemId: string) => Promise<void>;
   incrementOrDecrementItem: (
     itemId: string,
@@ -37,30 +45,70 @@ export const CartContext = createContext<CartContextType | undefined>(
 export const CartProvider = ({ children }: SomeChildrenInterface) => {
   const { data: session } = useSession();
   const { listItemById } = useItems();
-  const { createUserCart } = useCartHook();
+  const { createUserCart, listCartByUser } = useCartHook();
   const { isLoading, setIsLoading } = useContext(LoadingContext);
   const [quantity, setQuantity] = useState(0);
-  const [items, setItems] = useState<CartItem[]>([]);
+  const [itemsLocal, setItemsLocal] = useState<CartItemLocal[]>([]);
+  const [itemsCartApi, setItemsCartApi] = useState<CartApiResponse | null>(
+    null,
+  );
 
   useEffect(() => {
     try {
       const stored = localStorage.getItem('cart-items');
-      setItems(stored ? JSON.parse(stored) : []);
+      setItemsLocal(stored ? JSON.parse(stored) : []);
     } catch {
-      setItems([]);
+      setItemsLocal([]);
     }
   }, []);
 
-  // Atualiza o localStorage toda vez que items mudar
   useEffect(() => {
     const timeout = setTimeout(() => {
-      localStorage.setItem('cart-items', JSON.stringify(items));
-      const quantity = items.reduce((acc, curr) => acc + curr.quantity, 0);
+      localStorage.setItem('cart-items', JSON.stringify(itemsLocal));
+      const quantity = itemsLocal.reduce((acc, curr) => acc + curr.quantity, 0);
       setQuantity(quantity > 0 ? quantity : 0);
     }, 300);
-
     return () => clearTimeout(timeout);
-  }, [items]);
+  }, [itemsLocal]);
+
+  useEffect(() => {
+    listCart();
+  }, [session]);
+
+  const listCart = async () => {
+    const token = session?.user?.accessToken || '';
+
+    const res = await listCartByUser({ token });
+
+    if (!res.data) {
+      console.warn('Sem dados no carrinho.');
+      return;
+    }
+
+    const carrinhoSimplificado: CartApiResponse = {
+      valorTotal: res.data.valorTotal,
+      carrinhoItens: res.data.carrinhoItens.map((ci: ItemCarrinho) => ({
+        id: ci.id,
+        precoAtual: ci.precoAtual,
+        itemId: ci.itemId,
+        carrinhoId: ci.carrinhoId,
+        quantidade: ci.quantidade,
+        Item: {
+          nome: ci.Item.nome,
+          preco: ci.Item.preco,
+          image: ci.Item.image,
+          descricao: ci.Item.descricao,
+          disponivel: ci.Item.disponivel,
+          tamanho: ci.Item.tamanho,
+        },
+      })),
+    };
+
+    console.log('ANTES do set:', itemsCartApi);
+    console.log('Novo carrinhoSimplificado:', carrinhoSimplificado);
+
+    setItemsCartApi(carrinhoSimplificado);
+  };
 
   // Função para adicionar item ao carrinho
   const addItemById = useCallback(
@@ -70,16 +118,16 @@ export const CartProvider = ({ children }: SomeChildrenInterface) => {
 
         const response = await listItemById(itemId);
 
-        const existingIndex = items.findIndex(
+        const existingIndex = itemsLocal.findIndex(
           (cartItem) => cartItem.item?.id === response.data.id,
         );
 
         if (existingIndex >= 0) {
-          const updatedItems = [...items];
+          const updatedItems = [...itemsLocal];
           updatedItems[existingIndex].quantity += 1;
-          setItems(updatedItems);
+          setItemsLocal(updatedItems);
         } else {
-          setItems((prevItems) => [
+          setItemsLocal((prevItems) => [
             ...prevItems,
             { item: response.data, quantity: 1 },
           ]);
@@ -87,22 +135,38 @@ export const CartProvider = ({ children }: SomeChildrenInterface) => {
 
         setIsLoading(false);
       } else {
-        setIsLoading(true);
-        const res = await createUserCart({
-          token: session.user.accessToken,
-          body: { itemId: itemId, userId: session.user.id },
-        });
+        try {
+          setIsLoading(true);
+          const res = await createUserCart({
+            token: session.user.accessToken,
+            body: { itemId: itemId, userId: session.user.id },
+          });
 
-        console.log('RES CREATE CART', res);
-        setIsLoading(false);
+          if (!res.success) {
+            toast.error('Erro ao criar Carrinho. Entre em contato com suporte');
+          }
+          console.log(res);
+          setIsLoading(false);
+        } catch (error) {
+          console.error(error);
+        } finally {
+          setIsLoading(false);
+        }
       }
     },
-    [session?.user?.id, listItemById, setIsLoading, items],
+    [
+      session?.user?.id,
+      session?.user.accessToken,
+      listItemById,
+      createUserCart,
+      setIsLoading,
+      itemsLocal,
+    ],
   );
 
   const incrementOrDecrementItem = (act: string, itemId: string) => {
     if (!session?.user.id) {
-      const updatedItems = items.map((item) => {
+      const updatedItems = itemsLocal.map((item) => {
         if (item.item.id === itemId) {
           const newQuantity =
             act === 'increment' ? item.quantity + 1 : item.quantity - 1;
@@ -110,21 +174,22 @@ export const CartProvider = ({ children }: SomeChildrenInterface) => {
         }
         return item;
       });
-      setItems(updatedItems);
+      setItemsLocal(updatedItems);
     }
   };
 
   const removeItem = (itemId: string) => {
     if (!session?.user.id) {
-      const updatedItems = items.filter((item) => item.item.id !== itemId);
-      setItems(updatedItems);
+      const updatedItems = itemsLocal.filter((item) => item.item.id !== itemId);
+      setItemsLocal(updatedItems);
     }
   };
 
   return (
     <CartContext.Provider
       value={{
-        items,
+        itemsLocal,
+        itemsCartApi,
         isLoading,
         quantity,
         addItemById,

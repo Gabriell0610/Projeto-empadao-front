@@ -16,11 +16,16 @@ interface CartProps {
 }
 
 const Cart = ({ openCart, setOpenCart }: CartProps) => {
-  const { items, isLoading, quantity, incrementOrDecrementItem, removeItem } =
-    useCart();
+  const {
+    itemsLocal,
+    isLoading,
+    quantity,
+    incrementOrDecrementItem,
+    removeItem,
+  } = useCart();
 
   const getTotalPrice = () => {
-    return items.reduce(
+    return itemsLocal.reduce(
       (total, item) => total + parseFloat(item.item?.preco) * item.quantity,
       0,
     );
@@ -45,7 +50,7 @@ const Cart = ({ openCart, setOpenCart }: CartProps) => {
               </TitleH4>
             </Drawer.Header>
             <Drawer.Body className="h-2 overflow-y-auto bg-neutral-offWhite px-3 py-5">
-              {items.map((item, index) => (
+              {itemsLocal.map((item, index) => (
                 <div className="mb-5 flex gap-2 bg-white px-2 py-2" key={index}>
                   <Image
                     src={item.item?.image || ImageFood}

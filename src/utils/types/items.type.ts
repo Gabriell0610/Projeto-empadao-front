@@ -10,6 +10,7 @@ export interface ListActiveItemsInterface {
   preco: string;
   image: string;
   disponivel: EnumStatusItem;
+  tamanho: string;
   pesoReal: string;
 }
 
@@ -19,7 +20,6 @@ export interface ListActiveItemsByIdInterface {
   descricao: string;
   preco: string;
   image: string;
-  disponivel: string;
+  disponivel: EnumStatusItem;
   tamanho: string;
-  pesoReal: string;
 }

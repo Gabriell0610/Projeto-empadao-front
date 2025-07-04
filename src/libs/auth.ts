@@ -26,7 +26,10 @@ const login = async (credentials: any) => {
       headers: { 'Content-Type': 'application/json' },
     });
 
+    console.log('resposta do login: ', res);
+
     const user = await res.json();
+    console.log('dados do login: ', user);
 
     if (!res.ok) {
       throw new Error('Email ou senha inválidos');
@@ -59,6 +62,7 @@ export const authOptions: NextAuthOptions = {
 
         // Decodificando token para pegar id, email e role
         const decoded = jwtDecode<JWT>(res.access_token);
+        //console.log('token 1', res.access_token);
 
         return {
           id: decoded.id, // Obrigatório para NextAuth
@@ -81,10 +85,6 @@ export const authOptions: NextAuthOptions = {
         token.expiresAt = user.expiresAt;
       }
 
-      if (token.expiresAt && Date.now() > token.expiresAt) {
-        throw new Error('Sessão expirada');
-      }
-
       return token;
     },
     async session({ session, token }) {
@@ -94,11 +94,15 @@ export const authOptions: NextAuthOptions = {
         session.user.role = token.role as AccessProfile;
         session.user.accessToken = token.accessToken as string;
       }
+      (session as any).expiresAt = token.expiresAt;
 
       return session;
     },
   },
   pages: {
     signIn: '/login',
+  },
+  events: {
+    signOut: () => {},
   },
 };
